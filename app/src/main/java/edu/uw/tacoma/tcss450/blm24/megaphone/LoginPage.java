@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 
 import java.net.URI;
+import java.util.stream.IntStream;
 
 public class LoginPage extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,14 @@ public class LoginPage extends AppCompatActivity {
         });
 
         // Login button set up:
-
+        final Button logInButton = (Button) findViewById(R.id.button2);
+        logInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginPage.this, GroupPage.class);
+                LoginPage.this.startActivity(intent);
+            }
+        });
 
     }
-
 }
