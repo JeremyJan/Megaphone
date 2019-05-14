@@ -1,5 +1,6 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.xml.datatype.Duration;
 
@@ -34,16 +45,16 @@ public class RegisterPage extends AppCompatActivity {
             public void onClick(View v) {
                 // Save info currently in EditText fields.
                 getFieldInfo();
-                Log.w("TAG", "Here before the check");
-
 
                 // Input validation.
                 if (isValidInfo()) {
-                    // TODO: Send JSON request to register page.
-
+                    Log.d("TAG", "Successfully retrieved information.");
+                    String url = "https://megaphone-backend.herokuapp.com/register";
+                    new registerAccountAsyncTask().execute(url);
 
                 } else {
-                    Log.w("TAG", "Here");
+
+                    Log.e("","Error: Invalid/Missing information in EditText fields.");
                     // Display to use they haven't filled a field.
                     Toast toast = Toast.makeText(RegisterPage.this,
                             getResources().getString(R.string.invalid_info_register_error_message),
@@ -101,5 +112,53 @@ public class RegisterPage extends AppCompatActivity {
             return true;
         } else return false;
 
+    }
+
+    private class registerAccountAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String response = "";
+            HttpURLConnection urlConnection;
+
+            // Create and populate a JSON Object with account information.
+            JSONObject registerReq = new JSONObject();
+            try {
+                registerReq.put("email", mEmail);
+                registerReq.put("password", mPassword);
+            } catch (JSONException e) {
+                Log.e("JSONException", "Error creating JSONObject: " + e);
+            }
+
+            // Attempt to send formed JSON Object to register page.
+            Log.i("TAG", "Before the try block");
+            try {
+                Log.i("TAG","In the try block");
+                URL urlObject = new URL(getString(R.string.register_account_url));
+                Log.i("TAG","url: " + urlObject.toString());
+                urlConnection = (HttpURLConnection) urlObject.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setDoOutput(true);
+                OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
+                wr.write(registerReq.toString());
+                wr.flush();
+                wr.close();
+
+                InputStream content = urlConnection.getInputStream();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                String s = "";
+                while ((s = buffer.readLine()) != null) {
+                    response += s;
+                }
+
+            } catch (Exception e) {
+                Log.e("URLException", "Error sending account creation request: " + e);
+                Toast.makeText(getApplicationContext(), "Sorry, something has gone wrong." , Toast.LENGTH_LONG);
+            }
+
+            return response;
+
+        }
     }
 }
