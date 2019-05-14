@@ -22,6 +22,10 @@ import java.net.URL;
 
 import javax.xml.datatype.Duration;
 
+/**
+ * RegisterPage activity which enables the user to
+ * register for an account.
+ */
 public class RegisterPage extends AppCompatActivity {
 
     private String mEmail;
