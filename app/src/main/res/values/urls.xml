@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="register_account">https://megaphone-backend.herokuapp.com/register</string>
+
+</resources>

@@ -1,5 +1,8 @@
 <resources>
 
+    // URLS
+    <string name="register_account_url">https://megaphone-backend.herokuapp.com/register</string>
+
     // General text
     <string name="app_name">Megaphone</string>
     <string name="welcome_message_text">Welcome to Megaphone.</string>
