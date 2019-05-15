@@ -109,7 +109,7 @@ public class LoginPage extends AppCompatActivity {
                 } else if (!passOk) {
                     Toast.makeText(context, "Password too short", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "email: "+ emailOk +" pasError: "+ passOk, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Cannot login"+ passOk, Toast.LENGTH_SHORT).show();
                 }
 
             }
