@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.dummy.DummyContent;
 
 /**
  * GroupActivity Activity. This creates the Group landing page
@@ -20,7 +19,7 @@ import edu.uw.tacoma.tcss450.blm24.megaphone.dummy.DummyContent;
  */
 public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
-        GroupFragment.OnListFragmentInteractionListener{
+        GroupFragment.OnGroupListFragmentInteractionListener{
 
     /**
      * onCreate method. This sets up the list fragment and
@@ -60,7 +59,7 @@ public class GroupActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onGroupListFragmentInteraction(Group item) {
 
     }
 }
