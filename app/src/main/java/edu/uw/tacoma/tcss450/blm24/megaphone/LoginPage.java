@@ -21,6 +21,10 @@ import java.net.URI;
  */
 public class LoginPage extends AppCompatActivity {
 
+    /**
+     * onCreate method which intialized the buttons to do stuff
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,10 @@ public class LoginPage extends AppCompatActivity {
         final Button registerButton = (Button) findViewById(R.id.RegisterUserButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
 
+            /**
+             * This method starts the register page when clicked.
+             * @param v - the view
+             */
             public void onClick(View v) {
                 Intent intent = new Intent(LoginPage.this, RegisterPage.class);
                 LoginPage.this.startActivity(intent);
@@ -51,7 +59,6 @@ public class LoginPage extends AppCompatActivity {
         });
 
         // Login button set up:
-
         EditText email = (EditText)findViewById(R.id.emailInputField);
         EditText password = (EditText)findViewById(R.id.passwordInputField);
 
@@ -64,6 +71,16 @@ public class LoginPage extends AppCompatActivity {
         final Button logButton = (Button) findViewById(R.id.SignIn);
         logButton.setOnClickListener(new View.OnClickListener() {
 
+            /**
+             * enables the log in button...
+             * Requires that an email and the password to be valid according too...
+             * email having an @ symbol and the password being greater than 6
+             *
+             * Future implemntation: This will compare when looking at the
+             * login database.
+             *
+             * @param v - the view
+             */
             @Override
             public void onClick(View v) {
                 Log.i("TAG","Clicking signIn");
@@ -73,8 +90,9 @@ public class LoginPage extends AppCompatActivity {
                 if (memberEmail.contains("@") && memberPass.length() >= 6) {
                     Intent intent = new Intent(LoginPage.this, GroupActivity.class);
                     LoginPage.this.startActivity(intent);
+
                 } else {
-                    Toast.makeText(context, "Unable to login", Toast.LENGTH_SHORT);
+                    Toast.makeText(context, "Unable to login", Toast.LENGTH_SHORT).show();
                 }
 
             }

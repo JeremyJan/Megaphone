@@ -26,11 +26,15 @@ public class GroupActivity extends AppCompatActivity
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
+
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentTransaction.add(R.id.fragment_group_container, new GroupAddFragment()).commit();
+                //change this to replace once list fragment gets added
+                fragmentTransaction.add(R.id.fragment_group_container, new GroupAddFragment())
+                        .addToBackStack(null).commit();
             }
         });
     }

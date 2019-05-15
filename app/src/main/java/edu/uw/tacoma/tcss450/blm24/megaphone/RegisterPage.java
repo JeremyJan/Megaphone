@@ -28,14 +28,37 @@ import javax.xml.datatype.Duration;
  */
 public class RegisterPage extends AppCompatActivity {
 
+    /**
+     * mEmail field which stores the email of the user
+     */
     private String mEmail;
+    /**
+     * mPassword field which stores the password of the user
+     */
     private String mPassword;
+    /**
+     * mConfirmPassword which again stores the password of the user
+     * but mostly for verification that the two passwords are the
+     * same.
+     */
     private String mConfirmPassword;
 
-    EditText emailEditText;
-    EditText passwordEditText;
-    EditText confirmPasswordEditText;
-    Button createAccountButton;
+    /**
+     * emailEditText field which represents the EditText field of the
+     * email edit text
+     */
+    private EditText emailEditText;
+    /**
+     * passwordEditText field which represents the EditText field of
+     * the password edit text
+     */
+    private EditText passwordEditText;
+    /**
+     * confirmPasswordEditText field which represents the EditText field of
+     * the confirm editText
+     */
+    private EditText confirmPasswordEditText;
+    private Button createAccountButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
