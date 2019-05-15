@@ -124,26 +124,26 @@ public class RegisterActivity extends AppCompatActivity {
         boolean result = false;
         Toast toast;
 
-        // Case 1: One or more fields are empty.
-        if (emailEditText.getText().toString().isEmpty() ||
-            passwordEditText.getText().toString().isEmpty() ||
-            confirmPasswordEditText.getText().toString().isEmpty()) {
+        String email, password, passwordConfirm;
+        email = emailEditText.getText().toString();
+        password = passwordEditText.getText().toString();
+        passwordConfirm = confirmPasswordEditText.getText().toString();
 
+        // Case 1: One or more fields are empty.
+        if (email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
             toast = Toast.makeText(this, "Please enter all fields.", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0 ,0);
             toast.show();
-        }
-
-        // Case 2: Password is less than six characters long.
-        else if (passwordEditText.getText().toString().length() < 6) {
+        } else if (!Validation.validateEmail(mEmail)) { //Case 2: Bad Email
+            toast = Toast.makeText(this, "Invalid email.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0 ,0);
+            toast.show();
+        } else if (password.length() < 6) { // Case 3: Password is less than six characters long.
             toast = Toast.makeText(this, "Passwords must be at least six characters.",
                                     Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0 , 0);
             toast.show();
-        }
-
-        // Case 3: Password and confirm password do not match.
-        else if (!passwordEditText.getText().toString().equals(confirmPasswordEditText.getText().toString())) {
+        }  else if (!password.equals(passwordConfirm)) { // Case 4: Password and confirm password do not match.
             toast = Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0, 0);
             toast.show();
