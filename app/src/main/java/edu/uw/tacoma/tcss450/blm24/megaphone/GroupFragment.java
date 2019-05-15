@@ -55,6 +55,13 @@ public class GroupFragment extends Fragment {
         }
     }
 
+    /**
+     * Sets up the layout of the list
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

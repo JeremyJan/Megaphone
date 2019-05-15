@@ -20,6 +20,9 @@ import android.view.ViewGroup;
  */
 public class GroupAddFragment extends Fragment {
 
+    /**
+     * mListner the Fragment interaction listener
+     */
     private OnGroupAddragmentInteractionListener mListener;
 
     /**

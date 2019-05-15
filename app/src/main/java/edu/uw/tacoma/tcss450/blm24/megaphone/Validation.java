@@ -2,12 +2,24 @@ package edu.uw.tacoma.tcss450.blm24.megaphone;
 
 import java.util.regex.Pattern;
 
+/**
+ * Validation class which includes the validation regex for the email
+ */
 public final class Validation {
 
+    /**
+     * empty constructor
+     */
     private Validation() { }
 
+    /**
+     * the email pattern
+     */
     private static final Pattern emailPattern;
 
+    /**
+     * the email regex
+     */
     private static final String emailRegex = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~" +
             "-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0" +
             "b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x0" +
@@ -22,6 +34,11 @@ public final class Validation {
         emailPattern = Pattern.compile(emailRegex);
     }
 
+    /**
+     * validates the email
+     * @param email - the email address
+     * @return a boolean whether they match
+     */
     public static final boolean validateEmail(String email) {
         return emailPattern.matcher(email).matches();
     }
