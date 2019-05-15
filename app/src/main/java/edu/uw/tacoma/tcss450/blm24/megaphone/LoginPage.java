@@ -14,12 +14,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URI;
+import java.util.regex.Pattern;
 
 /**
  * LoginPage activity which is the first activity that is presented to the
  * user. This activity enables the user to register an account or login
  */
 public class LoginPage extends AppCompatActivity {
+
+    //via emailregex.com
+    private static final String emailRegex = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~" +
+            "-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0" +
+            "b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x0" +
+            "9\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0" +
+            "-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[" +
+            "0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]" +
+            "?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0" +
+            "e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0" +
+            "e-\\x7f])+)\\])";
 
     /**
      * onCreate method which intialized the buttons to do stuff
@@ -87,12 +99,17 @@ public class LoginPage extends AppCompatActivity {
                 String memberEmail = email.getText().toString();
                 String memberPass = password.getText().toString();
                 Log.i("TAG", memberEmail);
-                if (memberEmail.contains("@") && memberPass.length() >= 6) {
+                boolean emailOk;
+                boolean passOk;
+                if ((emailOk = memberEmail.matches(emailRegex)) & (passOk = memberPass.length() >= 6)) {
                     Intent intent = new Intent(LoginPage.this, GroupActivity.class);
                     LoginPage.this.startActivity(intent);
-
+                } else if (!emailOk) {
+                    Toast.makeText(context, "Invalid Email", Toast.LENGTH_SHORT).show();
+                } else if (!passOk) {
+                    Toast.makeText(context, "Password too short", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Unable to login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "email: "+ emailOk +" pasError: "+ passOk, Toast.LENGTH_SHORT).show();
                 }
 
             }
