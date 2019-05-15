@@ -217,6 +217,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP, 0, 0);
                         toast.show();
+                        finish();
                     }
                 });
 
