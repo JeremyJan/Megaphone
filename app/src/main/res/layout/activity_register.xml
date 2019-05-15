@@ -10,8 +10,9 @@
         android:id="@+id/emailEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="256dp"
         android:ems="10"
+        android:hint="@string/email_text_view_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -20,6 +21,7 @@
 
     <EditText
         android:id="@+id/passwordEditText"
+        android:hint="@string/password_text_view_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -31,6 +33,7 @@
 
     <EditText
         android:id="@+id/confirmPasswordEditText"
+        android:hint="@string/confirm_password_text_view_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -44,7 +47,6 @@
         android:id="@+id/registerPageEmailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/email_text_view_text"
         app:layout_constraintBottom_toTopOf="@+id/emailEditText"
         app:layout_constraintStart_toStartOf="@+id/emailEditText" />
 
@@ -52,7 +54,6 @@
         android:id="@+id/registerPagePasswordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/password_text_view_text"
         app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
         app:layout_constraintStart_toStartOf="@+id/passwordEditText" />
 
@@ -60,7 +61,6 @@
         android:id="@+id/registerPagePasswordConfirmTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/confirm_password_text_view_text"
         app:layout_constraintBottom_toTopOf="@+id/confirmPasswordEditText"
         app:layout_constraintStart_toStartOf="@+id/confirmPasswordEditText" />
 
@@ -69,8 +69,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/create_account_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText"
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>
