@@ -1,16 +1,26 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -23,9 +33,11 @@ public class GroupListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String GROUP_LIST_FRAG = "grouplistfrag";
-    // TODO: Customize parameters
-    private GroupModel mGroup;
     private OnGroupListFragmentInteractionListener mListener;
+
+    private RecyclerView mRecyclerView;
+
+    private List<GroupModel> groups;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -48,9 +60,6 @@ public class GroupListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mGroup = (GroupModel) getArguments().getSerializable(GROUP_LIST_FRAG);
-        }
     }
 
     @Override
@@ -61,13 +70,9 @@ public class GroupListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-//            if (mGroup <= 1) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mGroup));
-//            }
-            //recyclerView.setAdapter(new MyGroupRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            mRecyclerView = (RecyclerView) view;
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            new DownloadGroupsTask().execute(getString(R.string.get_group_list)); //TODO add URL
         }
         return view;
     }
@@ -103,5 +108,52 @@ public class GroupListFragment extends Fragment {
     public interface OnGroupListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onGroupListFragmentInteraction(GroupModel item);
+    }
+
+    private class DownloadGroupsTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                Log.i("AsyncRequest", url);
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+                    InputStream content = urlConnection.getInputStream();
+                    BufferedReader buffer = new BufferedReader(new
+                            InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+                } catch (Exception e) {
+                    response = "Unable to download the list of groups, Reason: " + e.getMessage();
+                    //Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject resultObject = new JSONObject(s);
+                if(resultObject.getBoolean("success")) {
+                    groups = GroupModel.parseCourseJson(resultObject.getString("names"));
+                }
+                if(!groups.isEmpty()) {
+                    Log.w("Nulls", (groups == null) +" "+ (mListener == null));
+                    mRecyclerView.setAdapter(new MyGroupRecyclerViewAdapter(groups, mListener));
+                }
+            } catch (JSONException e) {
+                Toast.makeText(getContext(), e.getMessage() +": "+ s, Toast.LENGTH_LONG).show();
+                Log.e("JSON", e.getMessage() +": "+ s+'\"');
+            }
+        }
     }
 }

@@ -10,6 +10,9 @@ public class GroupPage extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.group_page_container, new GroupListFragment())
+                .commit();
     }
 
     @Override

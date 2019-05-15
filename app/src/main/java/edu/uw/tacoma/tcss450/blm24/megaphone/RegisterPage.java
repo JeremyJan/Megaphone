@@ -6,10 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import javax.xml.datatype.Duration;
 
 public class RegisterPage extends AppCompatActivity {
 

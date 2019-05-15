@@ -18,6 +18,9 @@
     <string name="create_account_button_text">Create Account</string>
     <string name="invalid_info_register_error_message">Please make sure all fields are filled in.</string>
 
+    // SQL Query URLS
+    <string name="get_group_list">No get group URL yet</string> <!--TODO--> <!--TODO--> <!--TODO-->
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

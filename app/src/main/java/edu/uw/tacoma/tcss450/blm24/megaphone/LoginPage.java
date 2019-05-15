@@ -1,15 +1,10 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import java.net.URI;
-import java.util.stream.IntStream;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -34,7 +29,7 @@ public class LoginPage extends AppCompatActivity {
     private void buttonInit() {
 
         // Register button set up:
-        final Button registerButton = (Button) findViewById(R.id.RegisterUserButton);
+        final Button registerButton = findViewById(R.id.RegisterUserButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -45,7 +40,7 @@ public class LoginPage extends AppCompatActivity {
         });
 
         // Login button set up:
-        final Button logInButton = (Button) findViewById(R.id.button2);
+        final Button logInButton = findViewById(R.id.button2);
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
