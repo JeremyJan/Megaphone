@@ -22,6 +22,11 @@ public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
         GroupFragment.OnListFragmentInteractionListener{
 
+    /**
+     * onCreate method. This sets up the list fragment and
+     * the add fragment for groups
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,7 @@ public class GroupActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         FloatingActionButton fab = findViewById(R.id.fab);
 
+        //add list
         if(findViewById(R.id.fragment_group_container) != null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_group_container, new GroupFragment())
