@@ -26,4 +26,8 @@ public final class Validation {
         return emailPattern.matcher(email).matches();
     }
 
+    public static final boolean validatePassword(String password) {
+        return password.length() >= 6;
+    }
+
 }

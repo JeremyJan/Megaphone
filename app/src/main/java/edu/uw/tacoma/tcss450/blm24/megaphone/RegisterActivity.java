@@ -138,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
             toast = Toast.makeText(this, "Invalid email.", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0 ,0);
             toast.show();
-        } else if (password.length() < 6) { // Case 3: Password is less than six characters long.
+        } else if (!Validation.validatePassword(password)) { // Case 3: Password is less than six characters long.
             toast = Toast.makeText(this, "Passwords must be at least six characters.",
                                     Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0 , 0);
