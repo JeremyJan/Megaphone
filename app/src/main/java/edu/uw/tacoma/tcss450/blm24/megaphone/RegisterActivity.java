@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -20,13 +19,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.xml.datatype.Duration;
-
 /**
- * RegisterPage activity which enables the user to
+ * RegisterActivity activity which enables the user to
  * register for an account.
  */
-public class RegisterPage extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     /**
      * mEmail field which stores the email of the user
@@ -77,13 +74,13 @@ public class RegisterPage extends AppCompatActivity {
                 if (isValidInfo()) {
                     Log.d("TAG", "Successfully retrieved information.");
                     String url = "https://megaphone-backend.herokuapp.com/register";
-                    new registerAccountAsyncTask().execute(url);
+                    new RegisterAccountAsyncTask().execute(url);
 
                 } else {
 
                     Log.e("","Error: Invalid/Missing information in EditText fields.");
                     // Display to use they haven't filled a field.
-                    Toast toast = Toast.makeText(RegisterPage.this,
+                    Toast toast = Toast.makeText(RegisterActivity.this,
                             getResources().getString(R.string.invalid_info_register_error_message),
                             Toast.LENGTH_LONG);
                     toast.show();
@@ -141,7 +138,7 @@ public class RegisterPage extends AppCompatActivity {
 
     }
 
-    private class registerAccountAsyncTask extends AsyncTask<String, Void, String> {
+    private class RegisterAccountAsyncTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
