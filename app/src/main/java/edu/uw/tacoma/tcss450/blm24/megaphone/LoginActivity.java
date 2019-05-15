@@ -2,25 +2,19 @@ package edu.uw.tacoma.tcss450.blm24.megaphone;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.URI;
-import java.util.regex.Pattern;
-
 /**
- * LoginPage activity which is the first activity that is presented to the
+ * LoginActivity activity which is the first activity that is presented to the
  * user. This activity enables the user to register an account or login
  */
-public class LoginPage extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     //via emailregex.com
     private static final String emailRegex = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~" +
@@ -64,8 +58,8 @@ public class LoginPage extends AppCompatActivity {
              * @param v - the view
              */
             public void onClick(View v) {
-                Intent intent = new Intent(LoginPage.this, RegisterPage.class);
-                LoginPage.this.startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                LoginActivity.this.startActivity(intent);
 
             }
         });
@@ -102,8 +96,8 @@ public class LoginPage extends AppCompatActivity {
                 boolean emailOk;
                 boolean passOk;
                 if ((emailOk = memberEmail.matches(emailRegex)) & (passOk = memberPass.length() >= 6)) {
-                    Intent intent = new Intent(LoginPage.this, GroupActivity.class);
-                    LoginPage.this.startActivity(intent);
+                    Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
+                    LoginActivity.this.startActivity(intent);
                 } else if (!emailOk) {
                     Toast.makeText(context, "Invalid Email", Toast.LENGTH_SHORT).show();
                 } else if (!passOk) {
