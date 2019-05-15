@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // Input validation.
                 if (isValidInfo()) {
-                    new RegisterAccountAsyncTask().execute();
+                    new RegisterAccountAsyncTask(RegisterActivity.this).execute();
 
                 }
             }
@@ -161,6 +161,12 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private class RegisterAccountAsyncTask extends AsyncTask<String, Void, String> {
 
+        RegisterActivity parent;
+
+        public RegisterAccountAsyncTask(RegisterActivity parent) {
+            this.parent = parent;
+        }
+
         /**
          * Override of the doInBackground task, used to create, populate and send a JSON
          * object to the register page hosted on our Heroku server.
@@ -204,13 +210,33 @@ public class RegisterActivity extends AppCompatActivity {
                     response += s;
                 }
 
+                parent.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Successfully created your account. Let's get started!",
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 0);
+                        toast.show();
+                    }
+                });
+
             } catch (Exception e) {
-                Log.e("URLException", "Error sending account creation request: " + e);
-                Toast.makeText(getApplicationContext(), "Sorry, something has gone wrong." , Toast.LENGTH_LONG);
+
+                Log.e("TAG", "Error creating account, error: " + e);
+                parent.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Sorry something as gone wrong.",
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 0);
+                        toast.show();
+                    }
+                });
             }
 
             return response;
 
         }
+
     }
 }
