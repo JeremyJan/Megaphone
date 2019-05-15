@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,20 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // Input validation.
                 if (isValidInfo()) {
-                    Log.d("TAG", "Successfully retrieved information.");
-                    String url = "https://megaphone-backend.herokuapp.com/register";
-                    new RegisterAccountAsyncTask().execute(url);
+                    new RegisterAccountAsyncTask().execute();
 
-                } else {
-
-                    Log.e("","Error: Invalid/Missing information in EditText fields.");
-                    // Display to use they haven't filled a field.
-                    Toast toast = Toast.makeText(RegisterActivity.this,
-                            getResources().getString(R.string.invalid_info_register_error_message),
-                            Toast.LENGTH_LONG);
-                    toast.show();
                 }
-
             }
         });
 
@@ -124,22 +114,60 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks whether or not all the fields have been populated.
-     * To be called before sending information to database to attempt account creation.
+     * Validates the correct input of the EditText fields and shows Toasts depending on the
+     * invalid text.
      *
      * @return True if all fields are populated, false if not.
      */
     private boolean isValidInfo() {
-        if (mEmail.length() > 0 &&
-                mPassword.length() > 0 &&
-                mConfirmPassword.length() > 0) {
-            return true;
-        } else return false;
+        // TODO: Fix validation cases.
+        boolean result = false;
+        Toast toast;
 
+        // Case 1: One or more fields are empty.
+        if (emailEditText.getText().toString().isEmpty() ||
+            passwordEditText.getText().toString().isEmpty() ||
+            confirmPasswordEditText.getText().toString().isEmpty()) {
+
+            toast = Toast.makeText(this, "Please enter all fields.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0 ,0);
+            toast.show();
+        }
+
+        // Case 2: Password is less than six characters long.
+        else if (passwordEditText.getText().toString().length() < 6) {
+            toast = Toast.makeText(this, "Passwords must be at least six characters.",
+                                    Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0 , 0);
+            toast.show();
+        }
+
+        // Case 3: Password and confirm password do not match.
+        else if (!passwordEditText.getText().toString().equals(confirmPasswordEditText.getText().toString())) {
+            toast = Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 0);
+            toast.show();
+
+        }
+
+        // If not the others, then input is valid.
+        else result = true;
+
+        return result;
     }
 
+    /**
+     * Separate class to handle the async register task.
+     */
     private class RegisterAccountAsyncTask extends AsyncTask<String, Void, String> {
 
+        /**
+         * Override of the doInBackground task, used to create, populate and send a JSON
+         * object to the register page hosted on our Heroku server.
+         *
+         * @param strings
+         * @return The response from the server (success/fail).
+         */
         @Override
         protected String doInBackground(String... strings) {
             String response = "";
