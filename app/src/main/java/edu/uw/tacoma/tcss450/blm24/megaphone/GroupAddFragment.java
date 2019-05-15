@@ -3,6 +3,7 @@ package edu.uw.tacoma.tcss450.blm24.megaphone;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +38,14 @@ public class GroupAddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
         return inflater.inflate(R.layout.fragment_group_add, container, false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        ((FloatingActionButton) getActivity().findViewById(R.id.fab)).show();
+        super.onDestroyView();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -62,6 +69,7 @@ public class GroupAddFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+
         mListener = null;
     }
 
