@@ -2,5 +2,7 @@
 <resources>
 
     <string name="register_account">https://megaphone-backend.herokuapp.com/register</string>
+    <string name="add_group">https://megaphone-backend.herokuapp.com/addgroup</string>
+    <string name="view_groups">https://megaphone-backend.herokuapp.com/groups</string>
 
 </resources>
