@@ -11,11 +11,20 @@ import java.util.List;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Group} and makes a call to the
  * specified {@link GroupFragment}.
- * TODO: Replace the implementation with code for your data type.
+ *
+ * Recycles the fragments for reuse
  */
 public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecyclerViewAdapter.ViewHolder> {
 
+    /**
+     * Groups that were recieved, and will be stored
+     */
     private final List<Group> mValues;
+
+
+    /**
+     * The listener that handles change in the group list.
+     */
     private final GroupFragment.OnGroupListFragmentInteractionListener mListener;
 
     public MyGroupRecyclerViewAdapter(List<Group> items, GroupFragment.OnGroupListFragmentInteractionListener listener) {
@@ -23,6 +32,13 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
         mListener = listener;
     }
 
+    /**
+     * Hook on when this is created as a viewHolder.
+     *
+     * @param parent the parent view
+     * @param viewType the type of that parent view
+     * @return this, as a groupholder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -30,6 +46,12 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
         return new ViewHolder(view);
     }
 
+    /**
+     * Hook on when this binds to a viewHolder
+     *
+     * @param holder the holder it was bound to
+     * @param position the position of this view
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
@@ -48,11 +70,17 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
         });
     }
 
+    /**
+     * @return the number of groups this contains
+     */
     @Override
     public int getItemCount() {
         return mValues.size();
     }
 
+    /**
+     * Model class for the view in lists.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
@@ -62,10 +90,13 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.content);
         }
 
+        /**
+         * @return string representation of each model
+         */
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
