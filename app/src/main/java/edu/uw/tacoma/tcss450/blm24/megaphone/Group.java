@@ -1,8 +1,5 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,16 +10,56 @@ import java.util.List;
 
 public class Group implements Serializable {
 
+    /**
+     * Name of JSON element for a group's name.
+     */
     private static final String NAME = "groupname";
+
+    /**
+     * Name of JSON element for whether a group is private.
+     */
     private static final String PRIVATE = "isprivate";
+
+    /**
+     * Name of JSON element for if all users can send messages.
+     */
     private static final String ALL_SEND = "sendmessage";
+
+    /**
+     * Name of JSON element for the radius of the circle.
+     */
     private static final String RADIUS = "radius";
+
+    /**
+     * Name of JSON element for the latitude.
+     */
     private static final String LAT = "lat";
+
+    /**
+     * Name of JSON element for the longitude.
+     */
     private static final String LON = "lon";
 
+    /**
+     * This group's name.
+     */
     private String name;
+
+    /**
+     * This group's radius.
+     */
     private int radius;
+
+    /**
+     * This group's latitude and longitude.
+     */
     private double lat, lon;
+
+    /**
+     * This group's settings.
+     * Whether all users in the group may sent messages.
+     * Whether the group is available to all users.
+     */
     private boolean sendMessage, isPrivate;
 
     public Group(String name, boolean isPrivate, boolean sendMessage, int radius, double lat, double lon) {
@@ -34,21 +71,30 @@ public class Group implements Serializable {
         this.isPrivate = isPrivate;
     }
 
-    public static List<Group> parseCourseJson(String courseJson) throws JSONException {
-        List<Group> courseList = new ArrayList<>();
-        if (courseJson != null) {
-            JSONArray arr = new JSONArray(courseJson) ;
+    /**
+     * @param groupJson the JSON to be parsed into a group.
+     * @return the Group representation of the JSON.
+     * @throws JSONException if it cannot parse correctly
+     */
+    public static List<Group> parseJson(String groupJson) throws JSONException {
+        List<Group> groupList = new ArrayList<>();
+        if (groupJson != null) {
+            JSONArray arr = new JSONArray(groupJson) ;
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject obj = arr.getJSONObject(i);
-                Group course = new Group(obj.getString(Group.NAME), obj.getBoolean(Group.PRIVATE),
+                Group group = new Group(obj.getString(Group.NAME), obj.getBoolean(Group.PRIVATE),
                         obj.getBoolean(Group.ALL_SEND), obj.getInt(Group.RADIUS),
                         obj.getDouble(LAT), obj.getDouble(LON));
-                courseList.add(course);
+                groupList.add(group);
             }
         }
-        return courseList;
+        return groupList;
     }
 
+    /**
+     * @return a JSON representation of this object.
+     * @throws JSONException if it cannot convert into JSON correctly.
+     */
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(NAME, name);
@@ -92,6 +138,11 @@ public class Group implements Serializable {
         this.sendMessage = sendMessage;
     }
 
+    /**
+     * Returns a string representation of this group.
+     *
+     * @return a string representation.
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

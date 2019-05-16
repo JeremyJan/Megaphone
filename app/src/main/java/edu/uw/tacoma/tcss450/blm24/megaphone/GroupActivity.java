@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -66,6 +65,11 @@ public class GroupActivity extends AppCompatActivity
         //TODO
     }
 
+    /**
+     * Forwards a JSON representation of the group to upload it.
+     *
+     * @param group the group to add to the database.
+     */
     @Override
     public void onGroupAddFragmentInteraction(Group group) {
         try {
