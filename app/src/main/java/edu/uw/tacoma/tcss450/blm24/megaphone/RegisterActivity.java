@@ -65,17 +65,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         activityInit();
 
-        createAccountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Save info currently in EditText fields.
-                getFieldInfo();
+        createAccountButton.setOnClickListener(v -> {
+            // Save info currently in EditText fields.
+            getFieldInfo();
 
-                // Input validation.
-                if (isValidInfo()) {
-                    new RegisterAccountAsyncTask(RegisterActivity.this).execute();
+            // Input validation.
+            if (isValidInfo()) {
+                new RegisterAccountAsyncTask(RegisterActivity.this).execute();
 
-                }
             }
         });
 
@@ -210,28 +207,24 @@ public class RegisterActivity extends AppCompatActivity {
                     response += s;
                 }
 
-                parent.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Successfully created your account. Let's get started!",
-                                Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP, 0, 0);
-                        toast.show();
-                        finish();
-                    }
+                parent.runOnUiThread(() -> {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Successfully created your account. Let's get started!",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 0);
+                    toast.show();
+                    finish();
                 });
 
             } catch (Exception e) {
 
                 Log.e("TAG", "Error creating account, error: " + e);
-                parent.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Sorry something as gone wrong.",
-                                Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP, 0, 0);
-                        toast.show();
-                    }
+                parent.runOnUiThread(() -> {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Sorry something as gone wrong.",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 0);
+                    toast.show();
                 });
             }
 

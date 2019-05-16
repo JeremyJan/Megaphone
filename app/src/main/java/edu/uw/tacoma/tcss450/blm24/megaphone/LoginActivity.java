@@ -2,6 +2,7 @@ package edu.uw.tacoma.tcss450.blm24.megaphone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private void buttonInit() {
         Context context = getApplicationContext();
         // Register button set up:
-        final Button registerButton = (Button) findViewById(R.id.RegisterUserButton);
+        final Button registerButton = findViewById(R.id.RegisterUserButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -54,16 +55,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Login button set up:
-        EditText email = (EditText)findViewById(R.id.emailInputField);
-        EditText password = (EditText)findViewById(R.id.passwordInputField);
+        EditText email = findViewById(R.id.emailInputField);
+        EditText password = findViewById(R.id.passwordInputField);
 
 
 
 
-        //Janky authentication... need to be compared to the account database
-        //In order to log in you will have to at least have an @ symbol on the name
-        //and password length has to be >= 6
-        final Button logButton = (Button) findViewById(R.id.SignIn);
+        final Button logButton = findViewById(R.id.SignIn);
         logButton.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -87,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 if ((emailOk = Validation.validateEmail(memberEmail)) & (passOk = memberPass.length() >= 6)) {
                     Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
                     LoginActivity.this.startActivity(intent);
+                    finish();
                 } else if (!emailOk) {
                     Toast.makeText(context, "Invalid Email", Toast.LENGTH_SHORT).show();
                 } else if (!passOk) {

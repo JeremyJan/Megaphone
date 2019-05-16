@@ -53,13 +53,11 @@ public class GroupActivity extends AppCompatActivity
                     .commit();
         }
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //change this to replace once list fragment gets added
-                fragmentTransaction.replace(R.id.fragment_group_container, new GroupAddFragment()) //TODO crashes
-                        .addToBackStack(null).commit();
-            }
+        fab.setOnClickListener(view -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_group_container, new GroupAddFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
     }
 
@@ -72,7 +70,6 @@ public class GroupActivity extends AppCompatActivity
     public void onGroupAddFragmentInteraction(Group group) {
         try {
             args = group.toJSON();
-            Toast.makeText(this, args.toString(), 10).show();
             new AddGroupAsyncTask().execute(getString(R.string.add_group));
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "Cannot send "+ group, Toast.LENGTH_LONG).show();
@@ -116,10 +113,8 @@ public class GroupActivity extends AppCompatActivity
         protected void onPostExecute(String s) {
             try {
                 JSONObject res = new JSONObject(s);
-                Toast.makeText(GroupActivity.this, res.toString(), Toast.LENGTH_LONG).show();
                 if(res.getBoolean("success")) {
-                    Toast.makeText(getApplicationContext(), "Group added", Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(getApplicationContext(), "Group added", Toast.LENGTH_SHORT).show();
                     getSupportFragmentManager().popBackStackImmediate();
                 } else {
                     Toast.makeText(getApplicationContext(), "Couldn't add group: "+ res.getString("error"), Toast.LENGTH_LONG).show();

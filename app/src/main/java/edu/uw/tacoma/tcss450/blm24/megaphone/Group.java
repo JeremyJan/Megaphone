@@ -52,9 +52,9 @@ public class Group implements Serializable {
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(NAME, name);
-        json.put(PRIVATE, true); //TODO
-        json.put(ALL_SEND, true); //TODO
-        json.put(RADIUS, radius + 10); //TODO hard min
+        json.put(PRIVATE, true); //TODO broken, db doesn't take falses...
+        json.put(ALL_SEND, true); //TODO "                           "
+        json.put(RADIUS, radius + 10); //TODO hard min, db doesn't take 0s
         json.put(LAT, lat);
         json.put(LON, lon);
         return json;
