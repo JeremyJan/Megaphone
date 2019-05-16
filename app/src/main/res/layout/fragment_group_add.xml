@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_group_name"
-        android:id="@+id/course_id_edit_text"/>
+        android:id="@+id/group_name_edit_text"/>
 
     <TextView
         android:id="@+id/radiusBarText"
@@ -30,7 +30,7 @@
 
     <SeekBar
         android:id="@+id/radiusBar"
-        android:max="4"
+        android:max="90"
         android:progress="0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

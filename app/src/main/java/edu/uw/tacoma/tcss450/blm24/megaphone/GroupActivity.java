@@ -1,15 +1,23 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
-import android.content.Context;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -20,6 +28,8 @@ import android.view.View;
 public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
         GroupFragment.OnGroupListFragmentInteractionListener{
+
+    private JSONObject args;
 
     /**
      * onCreate method. This sets up the list fragment and
@@ -37,7 +47,7 @@ public class GroupActivity extends AppCompatActivity
         FloatingActionButton fab = findViewById(R.id.fab);
 
         //add list
-        if(findViewById(R.id.fragment_group_container) != null) {
+        if (findViewById(R.id.fragment_group_container) != null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_group_container, new GroupFragment())
                     .commit();
@@ -54,12 +64,69 @@ public class GroupActivity extends AppCompatActivity
     }
 
     @Override
-    public void onGroupAddFragmentInteraction(Uri uri) {
-
+    public void onGroupListFragmentInteraction(Group group) {
+        //TODO
     }
 
     @Override
-    public void onGroupListFragmentInteraction(Group item) {
+    public void onGroupAddFragmentInteraction(Group group) {
+        try {
+            args = group.toJSON();
+            Toast.makeText(this, args.toString(), 10).show();
+            new AddGroupAsyncTask().execute(getString(R.string.add_group));
+        } catch (JSONException e) {
+            Toast.makeText(getApplicationContext(), "Cannot send "+ group, Toast.LENGTH_LONG).show();
+        }
+    }
 
+    private class AddGroupAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setDoOutput(true);
+                    OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
+                    wr.write(args.toString());
+                    wr.flush();
+                    wr.close();
+                    InputStream content = urlConnection.getInputStream();
+                    BufferedReader buffer = new BufferedReader(new
+                            InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+                } catch (Exception e) {
+                    response = "Unable to add the new group, Reason: " + e.getMessage();
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject res = new JSONObject(s);
+                Toast.makeText(GroupActivity.this, res.toString(), Toast.LENGTH_LONG).show();
+                if(res.getBoolean("success")) {
+                    Toast.makeText(getApplicationContext(), "Group added", Toast.LENGTH_SHORT)
+                            .show();
+                    getSupportFragmentManager().popBackStackImmediate();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Couldn't add group: "+ res.getString("error"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

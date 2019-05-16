@@ -1,5 +1,8 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +49,17 @@ public class Group implements Serializable {
         return courseList;
     }
 
+    public JSONObject toJSON() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(NAME, name);
+        json.put(PRIVATE, true); //TODO
+        json.put(ALL_SEND, true); //TODO
+        json.put(RADIUS, radius + 10); //TODO hard min
+        json.put(LAT, lat);
+        json.put(LON, lon);
+        return json;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -76,5 +90,13 @@ public class Group implements Serializable {
 
     public void setSendMessage(boolean sendMessage) {
         this.sendMessage = sendMessage;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(name).append(' ').append(lat)
+                .append(':').append(lon);
+        return builder.toString();
     }
 }
