@@ -56,8 +56,15 @@ public class RegisterActivity extends AppCompatActivity {
      * the confirm editText
      */
     private EditText confirmPasswordEditText;
+    /**
+     * account button
+     */
     private Button createAccountButton;
 
+    /**
+     * Sets the create account buttons onClickListener and inits activityInit method
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

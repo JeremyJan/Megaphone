@@ -48,6 +48,13 @@ public class GroupAddFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * onCreateView which creates the view of the GroupAddFragment
+     * @param inflater - the inflater
+     * @param container - the container
+     * @param savedInstanceState - the instance
+     * @return the fragment view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
