@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A model that handles the properties of a chat-room "group"
+ */
 public class Group implements Serializable {
 
     /**

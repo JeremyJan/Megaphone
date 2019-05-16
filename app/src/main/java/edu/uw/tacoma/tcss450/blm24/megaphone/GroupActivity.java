@@ -80,7 +80,16 @@ public class GroupActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * An asynchronous task that adds the group to the database.
+     */
     private class AddGroupAsyncTask extends AsyncTask<String, Void, String> {
+        /**
+         * Submits the group args to the url(s)
+         *
+         * @param urls URLS to submit to
+         * @return the response of this operation.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -113,6 +122,11 @@ public class GroupActivity extends AppCompatActivity
             return response;
         }
 
+        /**
+         * Reports the result of the operation and moves in BackStack.
+         *
+         * @param s the result to report
+         */
         @Override
         protected void onPostExecute(String s) {
             try {
