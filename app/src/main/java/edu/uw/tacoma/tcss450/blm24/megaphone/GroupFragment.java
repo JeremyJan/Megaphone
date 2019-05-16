@@ -31,12 +31,20 @@ import java.util.List;
  */
 public class GroupFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String GROUP_LIST_FRAG = "grouplistfrag";
+    /**
+     * The listener
+     */
     private OnGroupListFragmentInteractionListener mListener;
 
+    /**
+     * the RecyclerView
+     */
     private RecyclerView mRecyclerView;
 
+    /**
+     * the groups
+     */
     private List<Group> groups;
 
     /**
@@ -47,7 +55,6 @@ public class GroupFragment extends Fragment {
 
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static GroupFragment getGroupListFrag(Group group) {
         GroupFragment fragment = new GroupFragment();
@@ -63,6 +70,13 @@ public class GroupFragment extends Fragment {
 
     }
 
+    /**
+     * onCreateView method which creates the view of the list fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,8 +125,16 @@ public class GroupFragment extends Fragment {
         void onGroupListFragmentInteraction(Group item);
     }
 
+    /**
+     * DownloadGroupsTask innerclass which does an AsyncTask
+     */
     private class DownloadGroupsTask extends AsyncTask<String, Void, String> {
 
+        /**
+         * Receives the list of groups
+         * @param urls
+         * @return the response
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -140,6 +162,11 @@ public class GroupFragment extends Fragment {
             return response;
         }
 
+        /**
+         * This method sends the JSON to be parsed if it successfully gets the
+         * JSON elements.
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             try {

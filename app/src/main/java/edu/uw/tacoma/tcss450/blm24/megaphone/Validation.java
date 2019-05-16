@@ -43,6 +43,11 @@ public final class Validation {
         return emailPattern.matcher(email).matches();
     }
 
+    /**
+     * Validates the password
+     * @param password
+     * @return true or false if the length is >= 6
+     */
     public static final boolean validatePassword(String password) {
         return password.length() >= 6;
     }
