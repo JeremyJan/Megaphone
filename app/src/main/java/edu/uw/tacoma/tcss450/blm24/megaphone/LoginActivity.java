@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonInit();
     }
 
-    /**
+    /*
      * Attaches click listeners to various buttons used on the login page.
      * Should be called inside the onCreate() method.
      *

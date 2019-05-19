@@ -2,6 +2,7 @@
 
     // URLS
     <string name="register_account_url">https://megaphone-backend.herokuapp.com/register</string>
+    <string name="check_email_availability_url">https://megaphone-backend.herokuapp.com/register/checkAvailability</string>
 
     // General text
     <string name="app_name">Megaphone</string>
