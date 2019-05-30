@@ -172,7 +172,7 @@ public class GroupFragment extends Fragment {
             try {
                 JSONObject resultObject = new JSONObject(s);
                 if(resultObject.getBoolean("success")) {
-                    groups = Group.parseCourseJson(resultObject.getString("names"));
+                    groups = Group.parseJson(resultObject.getString("names"));
                 }
                 if(!groups.isEmpty()) {
                     Log.w("Nulls", (groups == null) +" "+ (mListener == null));

@@ -72,17 +72,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         activityInit();
 
-        createAccountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Save info currently in EditText fields.
-                getFieldInfo();
+        createAccountButton.setOnClickListener(v -> {
+            // Save info currently in EditText fields.
+            getFieldInfo();
 
-                // Input validation.
-                if (isValidInfo()) {
-                    new RegisterAccountAsyncTask(RegisterActivity.this).execute();
+            // Input validation.
+            if (isValidInfo()) {
+                new RegisterAccountAsyncTask(RegisterActivity.this).execute();
 
-                }
             }
         });
 
@@ -195,12 +192,9 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.e("JSONException", "Error creating JSONObject: " + e);
             }
 
-            // Attempt to send formed JSON Object to register page.
-            Log.i("TAG", "Before the try block");
+            // Attempt to send JSON Object to the register page.
             try {
-                Log.i("TAG","In the try block");
-                URL urlObject = new URL(getString(R.string.register_account_url));
-                Log.i("TAG","url: " + urlObject.toString());
+                URL urlObject = new URL(getString(R.string.check_email_availability_url));
                 urlConnection = (HttpURLConnection) urlObject.openConnection();
                 urlConnection.setRequestMethod("POST");
                 urlConnection.setRequestProperty("Content-Type", "application/json");
@@ -216,29 +210,62 @@ public class RegisterActivity extends AppCompatActivity {
                 while ((s = buffer.readLine()) != null) {
                     response += s;
                 }
+                urlConnection.disconnect();
 
-                parent.runOnUiThread(new Runnable() {
-                    public void run() {
+                // Create a JSON object from the response message.
+                // This message will tell us if the entered email is already used in our
+                // database or not.
+                JSONObject responseJSON = new JSONObject(response);
+
+                // If it is email is not in use, continue on with registration.
+                if (responseJSON.getBoolean("isAvailable") == true) {
+                    urlObject = new URL(getString(R.string.register_account_url));
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setDoOutput(true);
+                    wr = new OutputStreamWriter(urlConnection.getOutputStream());
+                    wr.write(registerReq.toString());
+                    wr.flush();
+                    wr.close();
+
+                    content = urlConnection.getInputStream();
+                    buffer = new BufferedReader(new InputStreamReader(content));
+                    s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                    parent.runOnUiThread(() -> {
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "Successfully created your account. Let's get started!",
                                 Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP, 0, 0);
                         toast.show();
                         finish();
-                    }
-                });
+                    });
+
+                } else {  // If email is in use, tell the user it is unavailable.
+                    parent.runOnUiThread(() -> {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "That email is already in use.",
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 0);
+                        toast.show();
+                    });
+
+                }
+
 
             } catch (Exception e) {
 
                 Log.e("TAG", "Error creating account, error: " + e);
-                parent.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Sorry something as gone wrong.",
-                                Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP, 0, 0);
-                        toast.show();
-                    }
+                parent.runOnUiThread(() -> {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Sorry something as gone wrong.",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 0);
+                    toast.show();
                 });
             }
 

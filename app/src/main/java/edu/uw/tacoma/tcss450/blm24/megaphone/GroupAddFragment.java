@@ -81,7 +81,7 @@ public class GroupAddFragment extends Fragment {
         radiusSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                radiusText.setText(10 + Integer.toString(progress));
+                radiusText.setText(Integer.toString(progress + 10));
             }
 
             @Override

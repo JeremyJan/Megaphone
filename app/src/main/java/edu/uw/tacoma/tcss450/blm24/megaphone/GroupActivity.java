@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -53,13 +52,11 @@ public class GroupActivity extends AppCompatActivity
                     .commit();
         }
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //change this to replace once list fragment gets added
-                fragmentTransaction.replace(R.id.fragment_group_container, new GroupAddFragment()) //TODO crashes
-                        .addToBackStack(null).commit();
-            }
+        fab.setOnClickListener(view -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_group_container, new GroupAddFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
     }
 
@@ -68,18 +65,31 @@ public class GroupActivity extends AppCompatActivity
         //TODO
     }
 
+    /**
+     * Forwards a JSON representation of the group to upload it.
+     *
+     * @param group the group to add to the database.
+     */
     @Override
     public void onGroupAddFragmentInteraction(Group group) {
         try {
             args = group.toJSON();
-            Toast.makeText(this, args.toString(), 10).show();
             new AddGroupAsyncTask().execute(getString(R.string.add_group));
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "Cannot send "+ group, Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * An asynchronous task that adds the group to the database.
+     */
     private class AddGroupAsyncTask extends AsyncTask<String, Void, String> {
+        /**
+         * Submits the group args to the url(s)
+         *
+         * @param urls URLS to submit to
+         * @return the response of this operation.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -112,14 +122,17 @@ public class GroupActivity extends AppCompatActivity
             return response;
         }
 
+        /**
+         * Reports the result of the operation and moves in BackStack.
+         *
+         * @param s the result to report
+         */
         @Override
         protected void onPostExecute(String s) {
             try {
                 JSONObject res = new JSONObject(s);
-                Toast.makeText(GroupActivity.this, res.toString(), Toast.LENGTH_LONG).show();
                 if(res.getBoolean("success")) {
-                    Toast.makeText(getApplicationContext(), "Group added", Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(getApplicationContext(), "Group added", Toast.LENGTH_SHORT).show();
                     getSupportFragmentManager().popBackStackImmediate();
                 } else {
                     Toast.makeText(getApplicationContext(), "Couldn't add group: "+ res.getString("error"), Toast.LENGTH_LONG).show();
