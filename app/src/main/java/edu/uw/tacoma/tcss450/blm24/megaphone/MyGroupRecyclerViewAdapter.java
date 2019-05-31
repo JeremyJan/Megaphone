@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Group} and makes a call to the
- * specified {@link GroupFragment}.
+ * specified {@link GroupListFragment}.
  *
  * Recycles the fragments for reuse
  */
@@ -25,9 +25,9 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
     /**
      * The listener that handles change in the group list.
      */
-    private final GroupFragment.OnGroupListFragmentInteractionListener mListener;
+    private final GroupListFragment.OnGroupListFragmentInteractionListener mListener;
 
-    public MyGroupRecyclerViewAdapter(List<Group> items, GroupFragment.OnGroupListFragmentInteractionListener listener) {
+    public MyGroupRecyclerViewAdapter(List<Group> items, GroupListFragment.OnGroupListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }

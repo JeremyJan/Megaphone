@@ -26,7 +26,7 @@ import java.net.URL;
  */
 public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
-        GroupFragment.OnGroupListFragmentInteractionListener{
+        GroupListFragment.OnGroupListFragmentInteractionListener{
 
     private JSONObject args;
 
@@ -48,7 +48,7 @@ public class GroupActivity extends AppCompatActivity
         //add list
         if (findViewById(R.id.fragment_group_container) != null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_group_container, new GroupFragment())
+                    .add(R.id.fragment_group_container, new GroupListFragment())
                     .commit();
         }
 

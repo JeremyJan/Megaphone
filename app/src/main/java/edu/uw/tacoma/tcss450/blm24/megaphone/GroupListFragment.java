@@ -13,9 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +26,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnGroupListFragmentInteractionListener}
  * interface.
  */
-public class GroupFragment extends Fragment {
+public class GroupListFragment extends Fragment {
 
     private static final String GROUP_LIST_FRAG = "grouplistfrag";
     /**
@@ -51,13 +48,13 @@ public class GroupFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public GroupFragment() {
+    public GroupListFragment() {
 
     }
 
     @SuppressWarnings("unused")
-    public static GroupFragment getGroupListFrag(Group group) {
-        GroupFragment fragment = new GroupFragment();
+    public static GroupListFragment getGroupListFrag(Group group) {
+        GroupListFragment fragment = new GroupListFragment();
         Bundle args = new Bundle();
         args.putSerializable(GROUP_LIST_FRAG, group);
         fragment.setArguments(args);

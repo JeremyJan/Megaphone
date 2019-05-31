@@ -56,7 +56,7 @@ public class Group implements Serializable {
     private int radius;
 
     /**
-     * This group's latitude and longitude.
+     * This group's latitude and longitude as a geopoint object.
      */
     private GeoPoint geoPoint;
 

@@ -1,6 +1,7 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -75,11 +76,21 @@ public class GroupAddFragment extends Fragment {
             boolean isPrivate = privateS.isChecked();
             boolean canMembers = memberS.isChecked();
             int radius = radiusSB.getProgress();
+            //We are creating a group here as an object to contain all of the
+            //group settings
             Group mGroup = new Group(name,isPrivate,canMembers,radius
                     , new GeoPoint(50,-50));
+            //Init the firebase firestore db
             firestoreDB = FirebaseFirestore.getInstance();
             fbUtil = new FirebaseUtil(firestoreDB);
+            //this util function will add the group to the firestore database.
             fbUtil.createGroup(mGroup);
+            Intent newIntent = new Intent(getActivity(), GroupChatActivity.class);
+            newIntent.putExtra(GroupChatActivity.GROUPID, fbUtil.getGroupId());
+            newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());
+            startActivity(newIntent);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .remove(this).commit(); //this maybe works????
             mListener.onGroupAddFragmentInteraction(mGroup);
         });
         radiusSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
