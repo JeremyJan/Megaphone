@@ -72,12 +72,6 @@ public class GroupActivity extends AppCompatActivity
      */
     @Override
     public void onGroupAddFragmentInteraction(Group group) {
-        try {
-            args = group.toJSON();
-            new AddGroupAsyncTask().execute(getString(R.string.add_group));
-        } catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), "Cannot send "+ group, Toast.LENGTH_LONG).show();
-        }
     }
 
     /**

@@ -169,19 +169,7 @@ public class GroupFragment extends Fragment {
          */
         @Override
         protected void onPostExecute(String s) {
-            try {
-                JSONObject resultObject = new JSONObject(s);
-                if(resultObject.getBoolean("success")) {
-                    groups = Group.parseJson(resultObject.getString("names"));
-                }
-                if(!groups.isEmpty()) {
-                    Log.w("Nulls", (groups == null) +" "+ (mListener == null));
-                    mRecyclerView.setAdapter(new MyGroupRecyclerViewAdapter(groups, mListener));
-                }
-            } catch (JSONException e) {
-                Toast.makeText(getContext(), e.getMessage() +": "+ s, Toast.LENGTH_LONG).show();
-                Log.e("JSON", e.getMessage() +": "+ s+'\"');
-            }
+
         }
     }
 }
