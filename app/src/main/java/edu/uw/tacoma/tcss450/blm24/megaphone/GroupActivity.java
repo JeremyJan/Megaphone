@@ -1,11 +1,15 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -40,10 +44,14 @@ public class GroupActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.getMenu();
         setSupportActionBar(toolbar);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         FloatingActionButton fab = findViewById(R.id.fab);
+
+        // Add options to the toolbar.
+
 
         //add list
         if (findViewById(R.id.fragment_group_container) != null) {
@@ -59,6 +67,7 @@ public class GroupActivity extends AppCompatActivity
                     .commit();
         });
     }
+
 
     @Override
     public void onGroupListFragmentInteraction(Group group) {
@@ -78,6 +87,38 @@ public class GroupActivity extends AppCompatActivity
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "Cannot send "+ group, Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Inflate the menu for the toolbar.
+     * @param menu The menu to inflate.
+     * @return True if the menu was successfully inflated.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    /**
+     * Defines the actions that correspond to different MenuItems on the Toolbar.
+     * @param item Item selected from the Toolbar.
+     * @return True if action occured as expected.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Switch cases to get correct action for each menu item.
+        switch(item.getItemId())
+        {
+            case R.id.action_logout:
+                SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+                sp.edit().putBoolean("loggedIn", false).apply();
+                finish();
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**

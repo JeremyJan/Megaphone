@@ -2,6 +2,7 @@ package edu.uw.tacoma.tcss450.blm24.megaphone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.widget.Toast;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    SharedPreferences sp;
+
     /**
      * onCreate method which intialized the buttons to do stuff
      * @param savedInstanceState
@@ -26,11 +29,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Get shared preferences and check to see if the user is already logged in.
+        sp = getSharedPreferences("login", MODE_PRIVATE); // If logged in, go to groups page.
+        if (sp.getBoolean("loggedIn", true)) {
+            Intent i = new Intent(this, GroupActivity.class);
+            startActivity(i);
+        }
 
         buttonInit();
     }
 
-    /*
+    /**
      * Attaches click listeners to various buttons used on the login page.
      * Should be called inside the onCreate() method.
      *
@@ -83,8 +92,11 @@ public class LoginActivity extends AppCompatActivity {
                 boolean emailOk;
                 boolean passOk;
                 if ((emailOk = Validation.validateEmail(memberEmail)) & (passOk = memberPass.length() >= 6)) {
+                    sp.edit().putString("email", memberEmail).apply();
+                    sp.edit().putBoolean("loggedIn", true).apply();
                     Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
                     LoginActivity.this.startActivity(intent);
+
                     finish();
                 } else if (!emailOk) {
                     Toast.makeText(context, "Invalid Email", Toast.LENGTH_SHORT).show();
