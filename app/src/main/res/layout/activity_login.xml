@@ -112,4 +112,17 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/SignIn"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ForgotPasswordHyperlink"
+        app:layout_constraintVertical_bias="0.201"
+        tools:layout_editor_absoluteX="155dp"
+        android:id="@+id/debug_button"
+        android:text="debug"/>
+
+
 </android.support.constraint.ConstraintLayout>
