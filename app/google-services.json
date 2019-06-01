@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "99087717830",
+    "firebase_url": "https://megaphone-4023c.firebaseio.com",
+    "project_id": "megaphone-4023c",
+    "storage_bucket": "megaphone-4023c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99087717830:android:8002c3d5544e0643",
+        "android_client_info": {
+          "package_name": "edu.uw.tacoma.tcss450.blm24.megaphone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99087717830-6etr11a0co4gq75kmplli2cuf7b1torh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-b7Ntr3zQgpvt-QqoLAz97x2mDFdi1zQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99087717830-6etr11a0co4gq75kmplli2cuf7b1torh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

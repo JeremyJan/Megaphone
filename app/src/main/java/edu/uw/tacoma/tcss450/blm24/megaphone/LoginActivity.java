@@ -109,6 +109,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        Button debugButton = findViewById(R.id.debug_button);
+
+        debugButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
+                LoginActivity.this.startActivity(intent);
+                finish();
+            }
+        });
+
 
 
 

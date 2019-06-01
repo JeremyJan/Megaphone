@@ -30,7 +30,8 @@ import java.net.URL;
  */
 public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
-        GroupFragment.OnGroupListFragmentInteractionListener{
+        GroupListFragment.OnGroupListFragmentInteractionListener,
+        GroupFireStoreListFragment.OnListFragmentInteractionListener{
 
     private JSONObject args;
 
@@ -56,7 +57,7 @@ public class GroupActivity extends AppCompatActivity
         //add list
         if (findViewById(R.id.fragment_group_container) != null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_group_container, new GroupFragment())
+                    .add(R.id.fragment_group_container, new GroupFireStoreListFragment())
                     .commit();
         }
 
@@ -81,12 +82,11 @@ public class GroupActivity extends AppCompatActivity
      */
     @Override
     public void onGroupAddFragmentInteraction(Group group) {
-        try {
-            args = group.toJSON();
-            new AddGroupAsyncTask().execute(getString(R.string.add_group));
-        } catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), "Cannot send "+ group, Toast.LENGTH_LONG).show();
-        }
+    }
+
+    @Override
+    public void onListFragmentInteraction(Group group) {
+
     }
 
     /**

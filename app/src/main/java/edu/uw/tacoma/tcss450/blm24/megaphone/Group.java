@@ -1,5 +1,7 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,9 +56,9 @@ public class Group implements Serializable {
     private int radius;
 
     /**
-     * This group's latitude and longitude.
+     * This group's latitude and longitude as a geopoint object.
      */
-    private double lat, lon;
+    private GeoPoint geoPoint;
 
     /**
      * This group's settings.
@@ -65,49 +67,22 @@ public class Group implements Serializable {
      */
     private boolean sendMessage, isPrivate;
 
-    public Group(String name, boolean isPrivate, boolean sendMessage, int radius, double lat, double lon) {
+    /**
+     * Empty constructor for firestore toObject
+     */
+    public Group() {
+
+    }
+
+    public Group(String name, boolean isPrivate, boolean sendMessage, int radius, GeoPoint geoPoint) {
         this.name = name;
         this.radius = radius;
-        this.lat = lat;
-        this.lon = lon;
+        this.geoPoint = geoPoint;
         this.sendMessage = sendMessage;
         this.isPrivate = isPrivate;
     }
 
-    /**
-     * @param groupJson the JSON to be parsed into a group.
-     * @return the Group representation of the JSON.
-     * @throws JSONException if it cannot parse correctly
-     */
-    public static List<Group> parseJson(String groupJson) throws JSONException {
-        List<Group> groupList = new ArrayList<>();
-        if (groupJson != null) {
-            JSONArray arr = new JSONArray(groupJson) ;
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject obj = arr.getJSONObject(i);
-                Group group = new Group(obj.getString(Group.NAME), obj.getBoolean(Group.PRIVATE),
-                        obj.getBoolean(Group.ALL_SEND), obj.getInt(Group.RADIUS),
-                        obj.getDouble(LAT), obj.getDouble(LON));
-                groupList.add(group);
-            }
-        }
-        return groupList;
-    }
 
-    /**
-     * @return a JSON representation of this object.
-     * @throws JSONException if it cannot convert into JSON correctly.
-     */
-    public JSONObject toJSON() throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put(NAME, name);
-        json.put(PRIVATE, true); //TODO broken, db doesn't take falses...
-        json.put(ALL_SEND, true); //TODO "                           "
-        json.put(RADIUS, radius + 10); //TODO hard min, db doesn't take 0s
-        json.put(LAT, lat);
-        json.put(LON, lon);
-        return json;
-    }
 
     public String getName() {
         return this.name;
@@ -141,16 +116,7 @@ public class Group implements Serializable {
         this.sendMessage = sendMessage;
     }
 
-    /**
-     * Returns a string representation of this group.
-     *
-     * @return a string representation.
-     */
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(name).append(' ').append(lat)
-                .append(':').append(lon);
-        return builder.toString();
+    public GeoPoint getGeoPoint() {
+        return geoPoint;
     }
 }
