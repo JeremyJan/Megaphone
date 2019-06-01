@@ -67,6 +67,13 @@ public class Group implements Serializable {
      */
     private boolean sendMessage, isPrivate;
 
+    /**
+     * Empty constructor for firestore toObject
+     */
+    public Group() {
+
+    }
+
     public Group(String name, boolean isPrivate, boolean sendMessage, int radius, GeoPoint geoPoint) {
         this.name = name;
         this.radius = radius;

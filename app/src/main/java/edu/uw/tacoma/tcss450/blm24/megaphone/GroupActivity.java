@@ -26,7 +26,8 @@ import java.net.URL;
  */
 public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
-        GroupListFragment.OnGroupListFragmentInteractionListener{
+        GroupListFragment.OnGroupListFragmentInteractionListener,
+        GroupFireStoreListFragment.OnListFragmentInteractionListener{
 
     private JSONObject args;
 
@@ -48,7 +49,7 @@ public class GroupActivity extends AppCompatActivity
         //add list
         if (findViewById(R.id.fragment_group_container) != null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_group_container, new GroupListFragment())
+                    .add(R.id.fragment_group_container, new GroupFireStoreListFragment())
                     .commit();
         }
 
@@ -72,6 +73,11 @@ public class GroupActivity extends AppCompatActivity
      */
     @Override
     public void onGroupAddFragmentInteraction(Group group) {
+    }
+
+    @Override
+    public void onListFragmentInteraction(Group group) {
+
     }
 
     /**

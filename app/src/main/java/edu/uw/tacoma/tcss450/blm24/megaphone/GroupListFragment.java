@@ -13,12 +13,21 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * A fragment representing a list of Items.
@@ -44,6 +53,8 @@ public class GroupListFragment extends Fragment {
      */
     private List<Group> groups;
 
+
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -59,6 +70,21 @@ public class GroupListFragment extends Fragment {
         args.putSerializable(GROUP_LIST_FRAG, group);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void getGroups() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Rooms").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+               groups.clear();
+               for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                   Group mGroup = snapshot.toObject(Group.class);
+                   Log.d("GROUPLISTFRAG", mGroup.getName());
+                   groups.add(mGroup);
+               }
+            }
+        });
     }
 
     @Override
@@ -78,13 +104,14 @@ public class GroupListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group_list, container, false);
-
+        groups = new ArrayList<>();
+        getGroups();
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mRecyclerView = (RecyclerView) view;
             mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-            new DownloadGroupsTask().execute(getString(R.string.view_groups));
+            mRecyclerView.setAdapter(new MyGroupRecyclerViewAdapter(groups, mListener));
         }
         return view;
     }

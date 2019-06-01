@@ -23,7 +23,7 @@ public class FirebaseUtil {
     }
 
     public void createGroup(Group group) {
-        db.collection("test").add(group).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        db.collection("Rooms").add(group).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (task.isSuccessful()) {
@@ -35,6 +35,8 @@ public class FirebaseUtil {
             }
         });
     }
+
+
 
     public String getGroupId() {
         return groupId;
