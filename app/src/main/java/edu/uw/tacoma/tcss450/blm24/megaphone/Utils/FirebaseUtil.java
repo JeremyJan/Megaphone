@@ -9,6 +9,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.Group;
+import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.GroupMessage;
 
 public class FirebaseUtil {
 
@@ -32,6 +33,21 @@ public class FirebaseUtil {
                     group.setGroupID(task.getResult().getId());
                 } else {
                     Log.w(TAG, "Add failed");
+                }
+            }
+        });
+    }
+
+    public static void createMessage(GroupMessage groupMessage) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        firestore.collection("messages").add(groupMessage)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "onComplete: createMessage added");
+                } else {
+                    Log.w(TAG, "onComplete: createMessage failed");
                 }
             }
         });
