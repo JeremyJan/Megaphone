@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.Utils;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -8,7 +8,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.regex.Pattern;
+import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.Group;
 
 public class FirebaseUtil {
 
@@ -28,7 +28,8 @@ public class FirebaseUtil {
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Add success");
-                    groupId = task.getResult().getId();
+                    Log.d(TAG, "Id: " + task.getResult().getId());
+                    group.setGroupID(task.getResult().getId());
                 } else {
                     Log.w(TAG, "Add failed");
                 }

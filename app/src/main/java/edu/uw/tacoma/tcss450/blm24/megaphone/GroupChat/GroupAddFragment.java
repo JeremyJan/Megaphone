@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+
+import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.Utils.FirebaseUtil;
 
 
 /**
@@ -85,6 +88,7 @@ public class GroupAddFragment extends Fragment {
             fbUtil = new FirebaseUtil(firestoreDB);
             //this util function will add the group to the firestore database.
             fbUtil.createGroup(mGroup);
+            mGroup.setGroupID(fbUtil.getGroupId());
             Intent newIntent = new Intent(getActivity(), GroupChatActivity.class);
             newIntent.putExtra(GroupChatActivity.GROUPID, fbUtil.getGroupId());
             newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());

@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
+
+import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 /**
  * A fragment representing a list of Items.
@@ -87,7 +89,10 @@ public class GroupFireStoreListFragment extends Fragment {
                     groups.clear();
                     for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
                         Group mGroup = snapshot.toObject(Group.class);
-                        Log.d("GROUPLISTFRAG", mGroup.getName());
+                        Log.d("GROUPLISTFRAG", mGroup.getName() + " " + snapshot.getId());
+                        mGroup.setGroupID(snapshot.getId());
+                        Log.d("GROUPLISTFRAG", "My Name: "
+                                + mGroup.getName() + " MyID: " + mGroup.getGroupID());
                         groups.add(mGroup);
                     }
                     recyclerView.setAdapter(new MyGroupFireStoreListRecyclerViewAdapter(groups, mListener));

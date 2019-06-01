@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.Depreciated;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
+
+import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.Group;
+import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 /**
  * A fragment representing a list of Items.

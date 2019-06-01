@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
 import com.google.firebase.firestore.GeoPoint;
 
@@ -67,6 +67,8 @@ public class Group implements Serializable {
      */
     private boolean sendMessage, isPrivate;
 
+    private String groupID;
+
     /**
      * Empty constructor for firestore toObject
      */
@@ -118,5 +120,13 @@ public class Group implements Serializable {
 
     public GeoPoint getGeoPoint() {
         return geoPoint;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+
+    public String getGroupID() {
+        return groupID;
     }
 }

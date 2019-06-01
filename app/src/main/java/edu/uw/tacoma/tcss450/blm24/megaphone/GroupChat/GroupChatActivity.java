@@ -1,9 +1,16 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 public class GroupChatActivity extends AppCompatActivity {
+
+    public static final String TAG = "GROUPCHATACTIVITY";
 
     public static final String GROUPID = "GROUPID";
 
@@ -23,7 +30,10 @@ public class GroupChatActivity extends AppCompatActivity {
             groupID = extras.getString(GROUPID, "");
             groupName = extras.getString(GROUPNAME, "");
         }
-
+        Log.d(TAG, "onCreate: id = " + groupID);
         getSupportActionBar().setTitle(groupName);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     }
 }
