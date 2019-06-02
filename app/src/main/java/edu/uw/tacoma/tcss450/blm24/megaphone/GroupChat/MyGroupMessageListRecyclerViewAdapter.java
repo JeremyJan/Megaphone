@@ -65,8 +65,8 @@ public class MyGroupMessageListRecyclerViewAdapter extends RecyclerView.Adapter<
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            messageTextView = (TextView) view.findViewById(R.id.content);
-            messengerTextView = (TextView) view.findViewById(R.id.item_number);
+            messageTextView = (TextView) view.findViewById(R.id.messageTextView);
+            messengerTextView = (TextView) view.findViewById(R.id.messengerTextView);
         }
 
         @Override
