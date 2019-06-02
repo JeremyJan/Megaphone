@@ -1,19 +1,25 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
+
 public class GroupMessage {
 
     private String groupid;
     private String text;
     private String name;
+    private @ServerTimestamp Date timestamp;
 
     public GroupMessage(){
-
     }
 
-    public GroupMessage(String groupID, String text, String name) {
+    public GroupMessage(String groupID, String text, String name, Date timeStamp) {
         this.groupid = groupID;
         this.text = text;
         this.name = name;
+        this.timestamp = timeStamp;
     }
 
     public String getId() {
@@ -38,5 +44,13 @@ public class GroupMessage {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

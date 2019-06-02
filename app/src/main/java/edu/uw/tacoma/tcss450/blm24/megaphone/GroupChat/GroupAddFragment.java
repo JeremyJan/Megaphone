@@ -82,7 +82,7 @@ public class GroupAddFragment extends Fragment {
             //We are creating a group here as an object to contain all of the
             //group settings
             Group mGroup = new Group(name,isPrivate,canMembers,radius
-                    , new GeoPoint(50,-50));
+                    , new GeoPoint(50,-50), null);
             //Init the firebase firestore db
             firestoreDB = FirebaseFirestore.getInstance();
             fbUtil = new FirebaseUtil(firestoreDB);
