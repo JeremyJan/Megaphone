@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/megaphone_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GroupChat.GroupChatActivity"></activity>
+        <activity
+            android:name=".User.ChangeUsernameActivity"
+            android:label="@string/change_username_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".GroupChat.GroupChatActivity" />
         <activity
             android:name=".GroupChat.GroupActivity"
             android:label="@string/title_activity_group"
