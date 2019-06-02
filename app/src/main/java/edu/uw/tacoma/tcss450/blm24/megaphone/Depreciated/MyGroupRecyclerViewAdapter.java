@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.Depreciated;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.Group;
+import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Group} and makes a call to the

@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/megaphone_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GroupChatActivity"></activity>
+        <activity android:name=".GroupChat.GroupChatActivity"></activity>
         <activity
-            android:name=".GroupActivity"
+            android:name=".GroupChat.GroupActivity"
             android:label="@string/title_activity_group"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".Login.RegisterActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

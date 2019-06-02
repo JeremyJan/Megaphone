@@ -1,14 +1,10 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
 import com.google.firebase.firestore.GeoPoint;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 /**
  * A model that handles the properties of a chat-room "group"
@@ -67,6 +63,10 @@ public class Group implements Serializable {
      */
     private boolean sendMessage, isPrivate;
 
+    private String groupID;
+
+    private @ServerTimestamp Date timestamp;
+
     /**
      * Empty constructor for firestore toObject
      */
@@ -74,12 +74,15 @@ public class Group implements Serializable {
 
     }
 
-    public Group(String name, boolean isPrivate, boolean sendMessage, int radius, GeoPoint geoPoint) {
+    public Group(String name, boolean isPrivate, boolean sendMessage, int radius
+            , GeoPoint geoPoint, Date timeStamp) {
         this.name = name;
         this.radius = radius;
         this.geoPoint = geoPoint;
         this.sendMessage = sendMessage;
         this.isPrivate = isPrivate;
+        this.timestamp = timeStamp;
+
     }
 
 
@@ -118,5 +121,21 @@ public class Group implements Serializable {
 
     public GeoPoint getGeoPoint() {
         return geoPoint;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

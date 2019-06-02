@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone;
+package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,12 +15,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
+
+import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 /**
  * A fragment representing a list of Items.
@@ -81,13 +84,16 @@ public class GroupFireStoreListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Rooms").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            db.collection("Rooms").orderBy("timestamp", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     groups.clear();
                     for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
                         Group mGroup = snapshot.toObject(Group.class);
-                        Log.d("GROUPLISTFRAG", mGroup.getName());
+                        Log.d("GROUPLISTFRAG", mGroup.getName() + " " + snapshot.getId());
+                        mGroup.setGroupID(snapshot.getId());
+                        Log.d("GROUPLISTFRAG", "My Name: "
+                                + mGroup.getName() + " MyID: " + mGroup.getGroupID());
                         groups.add(mGroup);
                     }
                     recyclerView.setAdapter(new MyGroupFireStoreListRecyclerViewAdapter(groups, mListener));
