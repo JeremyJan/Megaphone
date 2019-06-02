@@ -28,10 +28,13 @@
     <string name="size50">50 m</string>
     <string name="size75">75 m</string>
 
-    <!-- ChangeUsernameActivity Strings -->
+    <!-- Username Strings -->
     <string name="change_username_title">Change Username</string>
     <string name="new_username_hint">New Username</string>
     <string name="change_username_message">Please select your new username.</string>
+    <string name="default_username_alert_title">Change your username</string>
+    <string name="default_username_alert_message">It looks like you haven\'t set your username. You can choose your username
+                                                   with the Change Username option at the top of your screen.</string>
 
     <!-- Action Strings -->
     <string name="action_logout">Logout</string>

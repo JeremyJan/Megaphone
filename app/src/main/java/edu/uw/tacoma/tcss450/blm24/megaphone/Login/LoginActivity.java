@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Get shared preferences and check to see if the user is already logged in.
-        sp = getSharedPreferences("login", MODE_PRIVATE); // If logged in, go to groups page.
+        sp = getSharedPreferences("user", MODE_PRIVATE); // If logged in, go to groups page.
         if (sp.getBoolean("loggedIn", true)) {
             Intent i = new Intent(this, GroupActivity.class);
             startActivity(i);
@@ -118,8 +118,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
+                sp.edit().putBoolean("defaultName", true).apply();
                 LoginActivity.this.startActivity(intent);
-                finish();
             }
         });
 
