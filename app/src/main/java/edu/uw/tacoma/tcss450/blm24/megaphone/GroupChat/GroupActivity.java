@@ -35,6 +35,8 @@ public class GroupActivity extends AppCompatActivity
 
     private String TAG = "GROUP_ACTIVITY";
 
+    private SharedPreferences sp;
+
     /**
      * onCreate method. This sets up the list fragment and
      * the add fragment for groups
@@ -64,6 +66,8 @@ public class GroupActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         });
+
+        checkDefaultUsername();
     }
 
     @Override
@@ -141,8 +145,9 @@ public class GroupActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String newUsername = editText.getText().toString();
-                // TODO: Store/update username in SharedPreferences.
                 // TODO: Use stored username in firebase chat.
+                sp.edit().putBoolean("defaultName", false).apply();
+                sp.edit().putString("username", newUsername).apply();
                 dialog.dismiss();
 
             }
@@ -157,6 +162,25 @@ public class GroupActivity extends AppCompatActivity
         });
 
         return alertDialog;
+    }
+
+    public void checkDefaultUsername() {
+        sp = getSharedPreferences("user", MODE_PRIVATE);
+        if (sp.getBoolean("defaultName", true)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.default_username_alert_title)
+                    .setMessage(R.string.default_username_alert_message)
+                    .setCancelable(false)
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            builder.create().show();
+
+        }
+
     }
 
 }
