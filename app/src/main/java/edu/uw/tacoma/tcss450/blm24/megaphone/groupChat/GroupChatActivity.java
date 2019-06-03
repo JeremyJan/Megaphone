@@ -1,4 +1,5 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
+
+package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +20,10 @@ import android.widget.TextView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
-import edu.uw.tacoma.tcss450.blm24.megaphone.Utils.FirebaseUtil;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.FirebaseUtil;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessage;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessageListFragment;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.FirebaseUtil;
 
 public class GroupChatActivity extends AppCompatActivity implements
         GroupMessageListFragment.OnListFragmentInteractionListener{
@@ -109,7 +113,7 @@ public class GroupChatActivity extends AppCompatActivity implements
                 FirebaseUtil.createMessage(groupMessage);
             }
         });
-        
+
 
 
     }

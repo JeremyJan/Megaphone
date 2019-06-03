@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
+package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ import edu.uw.tacoma.tcss450.blm24.megaphone.R;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class GroupMessageListFragment extends Fragment {
+public class GroupFireStoreListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -39,21 +39,18 @@ public class GroupMessageListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    private static final String TAG = "GROUPMESSAGELISTFRAG";
-
-    private List<GroupMessage> groupMessages = new ArrayList<>();
-
+    private List<Group> groups = new ArrayList<>();
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public GroupMessageListFragment() {
+    public GroupFireStoreListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static GroupMessageListFragment newInstance(int columnCount) {
-        GroupMessageListFragment fragment = new GroupMessageListFragment();
+    public static GroupFireStoreListFragment newInstance(int columnCount) {
+        GroupFireStoreListFragment fragment = new GroupFireStoreListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -67,17 +64,16 @@ public class GroupMessageListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+    }
+
+    private void getGroups() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_groupmessagelist_list, container, false);
-
-        Bundle bundle = this.getArguments();
-        String groupID = bundle.getString("groupID");
-        Log.d(TAG, "onCreateView: ");
+        View view = inflater.inflate(R.layout.fragment_groupfirestorelist_list, container, false);
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -88,21 +84,24 @@ public class GroupMessageListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("messages").whereEqualTo("id", groupID)
-                    .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            db.collection("Rooms").orderBy("timestamp", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    groupMessages.clear();
+                    groups.clear();
                     for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        GroupMessage mGroup = snapshot.toObject(GroupMessage.class);
-                        Log.d(TAG, "onEvent: groupMessage = " + mGroup.getText());
-                        groupMessages.add(mGroup);
+                        Group mGroup = snapshot.toObject(Group.class);
+                        Log.d("GROUPLISTFRAG", mGroup.getName() + " " + snapshot.getId());
+                        mGroup.setGroupID(snapshot.getId());
+                        Log.d("GROUPLISTFRAG", "My Name: "
+                                + mGroup.getName() + " MyID: " + mGroup.getGroupID());
+                        groups.add(mGroup);
                     }
-                    recyclerView.setAdapter(new MyGroupMessageListRecyclerViewAdapter(groupMessages, mListener));
+                    recyclerView.setAdapter(new MyGroupFireStoreListRecyclerViewAdapter(groups, mListener));
                 }
 
-            });        }
+            });
+
+        }
         return view;
     }
 
@@ -136,6 +135,6 @@ public class GroupMessageListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(GroupMessage item);
+        void onListFragmentInteraction(Group item);
     }
 }

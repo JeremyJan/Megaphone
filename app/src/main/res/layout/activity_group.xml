@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupChat.GroupActivity"
+    tools:context=".groupChat.GroupActivity"
     android:id="@+id/group_container">
 
     <android.support.design.widget.AppBarLayout

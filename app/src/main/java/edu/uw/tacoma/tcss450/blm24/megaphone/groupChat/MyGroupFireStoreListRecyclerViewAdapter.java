@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
+package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.GroupFireStoreListFragment.OnListFragmentInteractionListener;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupFireStoreListFragment.OnListFragmentInteractionListener;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 import java.util.List;

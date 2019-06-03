@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
+package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
-import edu.uw.tacoma.tcss450.blm24.megaphone.Utils.FirebaseUtil;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.FirebaseUtil;
 
 
 /**

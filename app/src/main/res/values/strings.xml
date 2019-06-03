@@ -36,10 +36,15 @@
     <string name="default_username_alert_message">It looks like you haven\'t set your username. You can choose your username
                                                    with the Change Username option at the top of your screen.</string>
 
+    <!-- Share Content Strings -->
+    <string name="share_content_alert_title">Share your group with friends</string>
+    <string name="share_content_alert_message">Enter the phone number you\'d like to share with.</string>
+    <string name="share_content_text_message_content_1">" would like you to chat with them on Megaphone! Join their group.</string>
+
     <!-- Action Strings -->
     <string name="action_logout">Logout</string>
     <string name="action_change_username">Change Username</string>
-
+    <string name="action_share">Share This Chat</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

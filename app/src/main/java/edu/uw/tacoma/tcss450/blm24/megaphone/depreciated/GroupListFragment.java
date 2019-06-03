@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.Depreciated;
+package edu.uw.tacoma.tcss450.blm24.megaphone.depreciated;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -29,7 +29,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.Group;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.Group;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 /**

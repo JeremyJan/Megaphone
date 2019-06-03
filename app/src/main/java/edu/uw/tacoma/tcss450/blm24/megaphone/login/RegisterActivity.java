@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.Login;
+package edu.uw.tacoma.tcss450.blm24.megaphone.login;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
