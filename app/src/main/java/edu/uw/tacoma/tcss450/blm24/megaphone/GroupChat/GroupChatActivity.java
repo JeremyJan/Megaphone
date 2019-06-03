@@ -1,5 +1,6 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ public class GroupChatActivity extends AppCompatActivity implements
     private ProgressBar mProgressBar;
     private EditText mMessageEditText;
     private ImageView mAddMessageImageView;
+
+    private SharedPreferences sp;
 
 
     private FirebaseFirestore db;
@@ -100,7 +103,9 @@ public class GroupChatActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 String theMessage = mMessageEditText.getText().toString();
                 Log.d(TAG, "onClick: " + theMessage);
-                GroupMessage groupMessage = new GroupMessage(groupID,theMessage, "HuskyHippo", null);
+                sp = getSharedPreferences("user", MODE_PRIVATE);
+                GroupMessage groupMessage = new GroupMessage(groupID,theMessage,
+                        sp.getString("username", "HuskyHippo"), null);
                 FirebaseUtil.createMessage(groupMessage);
             }
         });

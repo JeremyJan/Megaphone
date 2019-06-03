@@ -93,8 +93,7 @@ public class GroupAddFragment extends Fragment {
             newIntent.putExtra(GroupChatActivity.GROUPID, fbUtil.getGroupId());
             newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());
             startActivity(newIntent);
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .remove(this).commit(); //this maybe works????
+            getActivity().getSupportFragmentManager().popBackStack(); //this maybe works????
             mListener.onGroupAddFragmentInteraction(mGroup);
         });
         radiusSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

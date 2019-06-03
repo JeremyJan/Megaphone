@@ -62,8 +62,7 @@ public class GroupActivity extends AppCompatActivity
 
         fab.setOnClickListener(view -> {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_group_container, new GroupAddFragment())
-                    .addToBackStack(null)
+                    .replace(R.id.fragment_group_container, new GroupAddFragment()).addToBackStack(null)
                     .commit();
         });
 
