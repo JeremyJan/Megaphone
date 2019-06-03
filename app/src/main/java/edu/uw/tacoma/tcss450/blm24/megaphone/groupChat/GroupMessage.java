@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
+package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import com.google.firebase.firestore.ServerTimestamp;
 

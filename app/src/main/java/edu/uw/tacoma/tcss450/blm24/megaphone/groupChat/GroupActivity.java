@@ -1,23 +1,29 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat;
+package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.Depreciated.GroupListFragment;
+import edu.uw.tacoma.tcss450.blm24.megaphone.depreciated.GroupListFragment;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 
@@ -71,7 +77,7 @@ public class GroupActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        getMenuInflater().inflate(R.menu.group_toolbar, menu);
         return true;
     }
 
@@ -96,6 +102,47 @@ public class GroupActivity extends AppCompatActivity
                 SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
                 sp.edit().putBoolean("loggedIn", false).apply();
                 finish();
+                break;
+
+            case R.id.share_menu_item:
+                // Check and request permissions if necessary.
+                if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                        Manifest.permission.SEND_SMS)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.SEND_SMS},1);
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final EditText editText = new EditText(this);
+                builder.setTitle(R.string.share_content_alert_title)
+                        .setMessage(R.string.share_content_alert_message)
+                        .setCancelable(false)
+                        .setView(editText)
+                        .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Create sms manager to handle texting.
+                                SmsManager manager = SmsManager.getDefault();
+                                // Send the message.
+                                manager.sendTextMessage(editText.getText().toString(), null,
+                                        getString(R.string.share_content_text_message_content_1),
+                                        null, null);
+
+                                // Notify the user that the message was sent.
+                                Toast.makeText(getApplicationContext(),"Message sent!", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        })
+
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
                 break;
 
         }

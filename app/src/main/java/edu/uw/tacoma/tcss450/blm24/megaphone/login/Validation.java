@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.Login;
+package edu.uw.tacoma.tcss450.blm24.megaphone.login;
 
 import java.util.regex.Pattern;
 

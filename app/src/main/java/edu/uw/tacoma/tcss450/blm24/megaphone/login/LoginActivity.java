@@ -1,9 +1,8 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.Login;
+package edu.uw.tacoma.tcss450.blm24.megaphone.login;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.GroupActivity;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupActivity;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 /**

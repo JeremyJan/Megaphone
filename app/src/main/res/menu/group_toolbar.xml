@@ -9,6 +9,13 @@
         ></item>
 
     <item
+        android:id="@+id/share_menu_item"
+        android:title="@string/action_share"
+        app:showAsAction="always"
+        android:icon="@mipmap/share_icon"
+        ></item>
+
+    <item
         android:id="@+id/action_change_username"
         android:title="@string/action_change_username"
         app:showAsAction="always"

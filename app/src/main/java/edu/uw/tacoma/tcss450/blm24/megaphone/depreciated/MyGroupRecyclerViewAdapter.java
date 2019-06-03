@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.Depreciated;
+package edu.uw.tacoma.tcss450.blm24.megaphone.depreciated;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.Group;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.Group;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 /**

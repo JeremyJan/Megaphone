@@ -3,6 +3,7 @@
     package="edu.uw.tacoma.tcss450.blm24.megaphone">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -11,18 +12,18 @@
         android:roundIcon="@mipmap/megaphone_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".User.ChangeUsernameActivity"
-            android:label="@string/change_username_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".GroupChat.GroupChatActivity" />
+            android:name=".groupChat.GroupChatActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
-            android:name=".GroupChat.GroupActivity"
+            android:name=".groupChat.GroupActivity"
             android:label="@string/title_activity_group"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Login.RegisterActivity" />
+        <activity android:name=".login.RegisterActivity" />
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

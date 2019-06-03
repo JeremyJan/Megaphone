@@ -1,4 +1,4 @@
-package edu.uw.tacoma.tcss450.blm24.megaphone.Utils;
+package edu.uw.tacoma.tcss450.blm24.megaphone.utils;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -8,8 +8,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.Group;
-import edu.uw.tacoma.tcss450.blm24.megaphone.GroupChat.GroupMessage;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.Group;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessage;
 
 public class FirebaseUtil {
 
