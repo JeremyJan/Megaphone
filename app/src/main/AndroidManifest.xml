@@ -14,9 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".groupChat.GroupChatActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:name=".groupChat.GroupChatActivity" />
         <activity
             android:name=".groupChat.GroupActivity"
             android:label="@string/title_activity_group"
