@@ -66,6 +66,7 @@ public class GroupAddFragment extends Fragment {
                              Bundle savedInstanceState) {
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
         View view = inflater.inflate(R.layout.fragment_group_add, container, false);
+        getActivity().setTitle("Create a Group");
         EditText nameET = view.findViewById(R.id.group_name_edit_text);
         Switch memberS = view.findViewById(R.id.group_member_message_switch);
         memberS.setEnabled(false);

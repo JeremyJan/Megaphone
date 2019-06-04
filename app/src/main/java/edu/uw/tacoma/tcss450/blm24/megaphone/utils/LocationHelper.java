@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import javax.net.ssl.ManagerFactoryParameters;
+
 public final class LocationHelper {
 
     private static Double LAT, LON;
@@ -63,6 +65,10 @@ public final class LocationHelper {
 
     public static Double getLON() {
         return LON;
+    }
+
+    public static boolean hasLocation() {
+        return getLON() != null && getLON() != null;
     }
 
     public static Float distance(double lat, double lon) {

@@ -78,8 +78,6 @@ public class GroupFireStoreListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_groupfirestorelist_list, container, false);
         // Set the adapter
 
-        LocationHelper.setup(getActivity());
-
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -99,11 +97,13 @@ public class GroupFireStoreListFragment extends Fragment {
                         mGroup.setGroupID(snapshot.getId());
                         Log.d("GROUPLISTFRAG", "My Name: "
                                 + mGroup.getName() + " MyID: " + mGroup.getGroupID());
-                        int radius = mGroup.getRadius();
-                        double lat = mGroup.getGeoPoint().getLatitude();
-                        double lon = mGroup.getGeoPoint().getLongitude();
-                        if(LocationHelper.distance(lat, lon) <= radius) {
-                            groups.add(mGroup);
+                        if(LocationHelper.setup(getActivity()) && LocationHelper.hasLocation()) {
+                            int radius = mGroup.getRadius();
+                            double lat = mGroup.getGeoPoint().getLatitude();
+                            double lon = mGroup.getGeoPoint().getLongitude();
+                            if(LocationHelper.distance(lat, lon) <= radius) {
+                                groups.add(mGroup);
+                            }
                         }
                     }
                     recyclerView.setAdapter(new MyGroupFireStoreListRecyclerViewAdapter(groups, mListener));
@@ -113,6 +113,10 @@ public class GroupFireStoreListFragment extends Fragment {
 
         }
         return view;
+    }
+
+    private void updateRooms() {
+
     }
 
 
