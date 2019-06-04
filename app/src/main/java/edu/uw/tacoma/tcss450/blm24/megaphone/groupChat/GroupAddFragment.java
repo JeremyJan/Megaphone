@@ -96,6 +96,7 @@ public class GroupAddFragment extends Fragment {
             getActivity().getSupportFragmentManager().popBackStack(); //this maybe works????
             mListener.onGroupAddFragmentInteraction(mGroup);
         });
+        radiusText.setText("10");
         radiusSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

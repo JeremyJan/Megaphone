@@ -31,7 +31,6 @@
     <SeekBar
         android:id="@+id/radiusBar"
         android:max="90"
-        android:progress="0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.SeekBar.Discrete" />
