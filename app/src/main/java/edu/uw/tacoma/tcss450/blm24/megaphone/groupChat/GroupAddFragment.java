@@ -19,6 +19,7 @@ import com.google.firebase.firestore.GeoPoint;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 import edu.uw.tacoma.tcss450.blm24.megaphone.utils.FirebaseUtil;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 
 /**
@@ -82,7 +83,7 @@ public class GroupAddFragment extends Fragment {
             //We are creating a group here as an object to contain all of the
             //group settings
             Group mGroup = new Group(name,isPrivate,canMembers,radius
-                    , new GeoPoint(50,-50), null);
+                    , new GeoPoint(LocationHelper.getLAT(), LocationHelper.getLON()),null);
             //Init the firebase firestore db
             firestoreDB = FirebaseFirestore.getInstance();
             fbUtil = new FirebaseUtil(firestoreDB);

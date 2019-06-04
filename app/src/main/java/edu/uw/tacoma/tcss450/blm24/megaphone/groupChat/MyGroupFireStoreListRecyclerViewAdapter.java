@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupFireStoreListFragment.OnListFragmentInteractionListener;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 import java.util.List;
 
@@ -37,8 +38,14 @@ public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getName());
-        holder.mContentView.setText("Radius: " + Integer.toString(mValues.get(position).getRadius()));
+        Group group = mValues.get(position);
+        double lat = group.getGeoPoint().getLatitude();
+        double lon = group.getGeoPoint().getLongitude();
+        holder.mIdView.setText(group.getName());
+        StringBuilder builder = new StringBuilder();
+        builder.append(LocationHelper.distance(lat, lon));
+        builder.append("m away");
+        holder.mContentView.setText(builder.toString());
 
         Log.d("FIRESTORE_RecylerView", "In onBindViewHolder");
 

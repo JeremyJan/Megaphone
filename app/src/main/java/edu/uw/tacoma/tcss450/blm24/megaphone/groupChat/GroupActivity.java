@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.depreciated.GroupListFragment;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 
 /**
@@ -72,6 +74,7 @@ public class GroupActivity extends AppCompatActivity
                     .commit();
         });
 
+        LocationHelper.setup(this);
         checkDefaultUsername();
     }
 
