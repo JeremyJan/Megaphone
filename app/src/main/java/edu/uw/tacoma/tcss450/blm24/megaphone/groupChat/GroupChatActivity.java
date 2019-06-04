@@ -111,6 +111,7 @@ public class GroupChatActivity extends AppCompatActivity implements
                 GroupMessage groupMessage = new GroupMessage(groupID,theMessage,
                         sp.getString("username", "HuskyHippo"), null);
                 FirebaseUtil.createMessage(groupMessage);
+                mSendButton.setText("");
             }
         });
 
