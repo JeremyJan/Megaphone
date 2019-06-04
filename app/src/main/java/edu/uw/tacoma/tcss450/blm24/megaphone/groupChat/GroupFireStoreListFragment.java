@@ -68,16 +68,12 @@ public class GroupFireStoreListFragment extends Fragment {
         }
     }
 
-    private void getGroups() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_groupfirestorelist_list, container, false);
-        // Set the adapter
-
+        // Set the adapters
+        getActivity().setTitle("Local Groups");
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -91,20 +87,22 @@ public class GroupFireStoreListFragment extends Fragment {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     groups.clear();
+                    Log.i("Rooms", "Retrieved "+ queryDocumentSnapshots.size());
                     for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
                         Group mGroup = snapshot.toObject(Group.class);
                         Log.d("GROUPLISTFRAG", mGroup.getName() + " " + snapshot.getId());
                         mGroup.setGroupID(snapshot.getId());
                         Log.d("GROUPLISTFRAG", "My Name: "
                                 + mGroup.getName() + " MyID: " + mGroup.getGroupID());
-                        if(LocationHelper.setup(getActivity()) && LocationHelper.hasLocation()) {
+                        if (LocationHelper.setup(getActivity()) && LocationHelper.hasLocation()) {
                             int radius = mGroup.getRadius();
                             double lat = mGroup.getGeoPoint().getLatitude();
                             double lon = mGroup.getGeoPoint().getLongitude();
-                            if(LocationHelper.distance(lat, lon) <= radius) {
+                            if (LocationHelper.distance(lat, lon) <= radius) {
                                 groups.add(mGroup);
                             }
                         }
+
                     }
                     recyclerView.setAdapter(new MyGroupFireStoreListRecyclerViewAdapter(groups, mListener));
                 }
@@ -114,11 +112,6 @@ public class GroupFireStoreListFragment extends Fragment {
         }
         return view;
     }
-
-    private void updateRooms() {
-
-    }
-
 
     @Override
     public void onAttach(Context context) {
