@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupActivity;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 /**
  * LoginActivity activity which is the first activity that is presented to the
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        LocationHelper.setup(this);
         // Get shared preferences and check to see if the user is already logged in.
         sp = getSharedPreferences("user", MODE_PRIVATE); // If logged in, go to groups page.
         if (sp.getBoolean("loggedIn", true)) {

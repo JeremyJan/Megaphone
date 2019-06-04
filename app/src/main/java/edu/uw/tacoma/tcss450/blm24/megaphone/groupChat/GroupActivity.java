@@ -57,6 +57,7 @@ public class GroupActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.getMenu();
         setSupportActionBar(toolbar);
+        setTitle("Local Groups");
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         FloatingActionButton fab = findViewById(R.id.fab);

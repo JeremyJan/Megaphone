@@ -81,6 +81,14 @@ public final class LocationHelper {
         return distance;
     }
 
+    public static String distanceString(double lat, double lon) {
+        Float distance = distance(lat, lon);
+        if(distance == null) {
+            return null;
+        }
+        return String.format("%.2f", distance);
+    }
+
     private static class Listener implements LocationListener {
 
         @Override

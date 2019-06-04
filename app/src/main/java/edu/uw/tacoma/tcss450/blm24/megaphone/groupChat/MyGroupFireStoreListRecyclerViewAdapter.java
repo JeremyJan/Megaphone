@@ -43,7 +43,7 @@ public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapte
         double lon = group.getGeoPoint().getLongitude();
         holder.mIdView.setText(group.getName());
         StringBuilder builder = new StringBuilder();
-        builder.append(LocationHelper.distance(lat, lon));
+        builder.append(LocationHelper.distanceString(lat, lon));
         builder.append("m away");
         holder.mContentView.setText(builder.toString());
 

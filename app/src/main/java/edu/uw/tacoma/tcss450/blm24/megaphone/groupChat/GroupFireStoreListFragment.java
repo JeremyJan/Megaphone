@@ -1,6 +1,7 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 /**
  * A fragment representing a list of Items.
@@ -75,6 +77,9 @@ public class GroupFireStoreListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_groupfirestorelist_list, container, false);
         // Set the adapter
+
+        LocationHelper.setup(getActivity());
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -94,7 +99,12 @@ public class GroupFireStoreListFragment extends Fragment {
                         mGroup.setGroupID(snapshot.getId());
                         Log.d("GROUPLISTFRAG", "My Name: "
                                 + mGroup.getName() + " MyID: " + mGroup.getGroupID());
-                        groups.add(mGroup);
+                        int radius = mGroup.getRadius();
+                        double lat = mGroup.getGeoPoint().getLatitude();
+                        double lon = mGroup.getGeoPoint().getLongitude();
+                        if(LocationHelper.distance(lat, lon) <= radius) {
+                            groups.add(mGroup);
+                        }
                     }
                     recyclerView.setAdapter(new MyGroupFireStoreListRecyclerViewAdapter(groups, mListener));
                 }
