@@ -6,7 +6,7 @@
 
     // General text
     <string name="app_name">Megaphone</string>
-    <string name="welcome_message_text">Welcome to Megaphone.</string>
+    <string name="welcome_message_text">Welcome to Megaphone</string>
 
     // LoginActivity Strings
     <string name="email_input_hint">Email</string>
