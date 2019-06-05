@@ -14,7 +14,7 @@
             android:id="@+id/messengerImageView"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@mipmap/megaphone_icon"/>
+            android:src="@drawable/megaphone_icon_bw"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +37,5 @@
                 android:layout_weight="0"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>
