@@ -57,7 +57,7 @@ public final class LocationHelper {
         Criteria crit = new Criteria();
         crit.setAccuracy(Criteria.ACCURACY_FINE);
         PROVIDER = MANAGER.getBestProvider(crit, true);
-        MANAGER.requestLocationUpdates(PROVIDER, 500, 1f, listener);
+        MANAGER.requestLocationUpdates(PROVIDER, 1000, 1f, listener);
         LISTENER = listener;
         return true;
     }

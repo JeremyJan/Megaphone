@@ -1,6 +1,7 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,7 +33,7 @@ import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class GroupFireStoreListFragment extends Fragment {
+public class GroupFireStoreListFragment extends Fragment implements LocationHelper.LatLonListener {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
@@ -40,6 +41,8 @@ public class GroupFireStoreListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
 
     public List<Group> groups = new ArrayList<>();
+    public List<Group> allGroups = new ArrayList<>();
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -87,6 +90,7 @@ public class GroupFireStoreListFragment extends Fragment {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     groups.clear();
+                    allGroups.clear();
                     Log.i("Rooms", "Retrieved "+ queryDocumentSnapshots.size());
                     for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
                         Group mGroup = snapshot.toObject(Group.class);
@@ -102,13 +106,14 @@ public class GroupFireStoreListFragment extends Fragment {
                                 groups.add(mGroup);
                             }
                         }
+                        allGroups.add(mGroup);
 
                     }
                     recyclerView.setAdapter(new FireStoreListRecyclerViewAdapter(groups, mListener));
                 }
 
             });
-
+            LocationHelper.registerListener(this);
         }
         return view;
     }
@@ -121,6 +126,27 @@ public class GroupFireStoreListFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void update() {
+        double lat, lon;
+        float distance;
+        float radius;
+        for(Group group : allGroups) {
+            lat = group.getGeoPoint().getLatitude();
+            lon = group.getGeoPoint().getLongitude();
+            distance = LocationHelper.distance(lat, lon);
+            radius = group.getRadius();
+            if (groups.contains(group)) {
+                if(distance > radius) {
+                    groups.remove(group);
+                }
+            } else if (distance < radius) {
+                groups.add(group);
+                groups.add(group);
+            }
         }
     }
 

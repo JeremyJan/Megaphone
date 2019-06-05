@@ -43,10 +43,9 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
         double lat = group.getGeoPoint().getLatitude();
         double lon = group.getGeoPoint().getLongitude();
         holder.mIdView.setText(group.getName());
-        StringBuilder builder = new StringBuilder();
-        builder.append(LocationHelper.distanceString(lat, lon));
-        builder.append("m away");
-        holder.mContentView.setText(builder.toString());
+        float distance = LocationHelper.distance(lat, lon);
+        float radius = group.getRadius();
+        holder.mContentView.setText(String.format("%.1f", 100.0 * (radius - distance)/radius) + '%');
         Log.d("FIRESTORE_RecylerView", "In onBindViewHolder");
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +85,9 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
         public void update() {
             double lat = mItem.getGeoPoint().getLatitude();
             double lon = mItem.getGeoPoint().getLongitude();
-            mContentView.setText(LocationHelper.distanceString(lat, lon)+"m away");
+            float radius = mItem.getRadius();
+            float distance = LocationHelper.distance(lat, lon);
+            mContentView.setText(String.format("%.1f", 100.0 * (radius - distance)/radius) + '%');
         }
     }
 }

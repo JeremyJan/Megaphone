@@ -80,7 +80,7 @@ public class GroupAddFragment extends Fragment {
             String name = nameET.getText().toString();
             boolean isPrivate = privateS.isChecked();
             boolean canMembers = memberS.isChecked();
-            int radius = radiusSB.getProgress();
+            int radius = radiusSB.getProgress() + 10;
             //We are creating a group here as an object to contain all of the
             //group settings
             Group mGroup = new Group(name,isPrivate,canMembers,radius
