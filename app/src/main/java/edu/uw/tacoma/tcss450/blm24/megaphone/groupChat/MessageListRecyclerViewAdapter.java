@@ -1,29 +1,27 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupFireStoreListFragment.OnListFragmentInteractionListener;
+import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessageListFragment.OnListFragmentInteractionListener;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
-import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Group} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link GroupMessage} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupFireStoreListRecyclerViewAdapter.ViewHolder> {
+public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<MessageListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Group> mValues;
+    private final List<GroupMessage> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyGroupFireStoreListRecyclerViewAdapter(List<Group> items, OnListFragmentInteractionListener listener) {
+    public MessageListRecyclerViewAdapter(List<GroupMessage> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -31,28 +29,22 @@ public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_groupfirestorelist, parent, false);
+                .inflate(R.layout.fragment_groupmessagelist, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        Group group = mValues.get(position);
-        double lat = group.getGeoPoint().getLatitude();
-        double lon = group.getGeoPoint().getLongitude();
-        holder.mIdView.setText(group.getName());
-        StringBuilder builder = new StringBuilder();
-        builder.append(LocationHelper.distanceString(lat, lon));
-        builder.append("m away");
-        holder.mContentView.setText(builder.toString());
-
-        Log.d("FIRESTORE_RecylerView", "In onBindViewHolder");
+        holder.messageTextView.setText(mValues.get(position).getText());
+        holder.messengerTextView.setText(mValues.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
@@ -66,20 +58,20 @@ public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Group mItem;
+        public final TextView messageTextView;
+        public final TextView messengerTextView;
+        public GroupMessage mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            messageTextView = (TextView) view.findViewById(R.id.messageTextView);
+            messengerTextView = (TextView) view.findViewById(R.id.messengerTextView);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + messengerTextView.getText() + "'";
         }
     }
 }

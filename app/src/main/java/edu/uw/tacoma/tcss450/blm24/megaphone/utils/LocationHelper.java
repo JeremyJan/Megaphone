@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import javax.net.ssl.ManagerFactoryParameters;
-
 public final class LocationHelper {
 
     private static Double LAT, LON;

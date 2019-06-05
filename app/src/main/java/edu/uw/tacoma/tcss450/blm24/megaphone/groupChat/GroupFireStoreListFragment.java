@@ -1,7 +1,6 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.content.Context;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -41,7 +40,7 @@ public class GroupFireStoreListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    private List<Group> groups = new ArrayList<>();
+    public List<Group> groups = new ArrayList<>();
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -104,7 +103,7 @@ public class GroupFireStoreListFragment extends Fragment {
                         }
 
                     }
-                    recyclerView.setAdapter(new MyGroupFireStoreListRecyclerViewAdapter(groups, mListener));
+                    recyclerView.setAdapter(new FireStoreListRecyclerViewAdapter(groups, mListener));
                 }
 
             });

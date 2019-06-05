@@ -24,7 +24,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
-import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 /**
  * A fragment representing a list of Items.
@@ -100,7 +99,7 @@ public class GroupMessageListFragment extends Fragment {
                         Log.d(TAG, "onEvent: groupMessage = " + mGroup.getText());
                         groupMessages.add(mGroup);
                     }
-                    recyclerView.setAdapter(new MyGroupMessageListRecyclerViewAdapter(groupMessages, mListener));
+                    recyclerView.setAdapter(new MessageListRecyclerViewAdapter(groupMessages, mListener));
                 }
 
             });        }
