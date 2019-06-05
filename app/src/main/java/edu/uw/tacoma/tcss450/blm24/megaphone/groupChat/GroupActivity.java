@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -21,10 +22,14 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.auth.User;
+
 import org.json.JSONObject;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.depreciated.GroupListFragment;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.sqlite.DatabaseHelper;
+import edu.uw.tacoma.tcss450.blm24.megaphone.sqlite.UsernameDB;
 
 
 /**
@@ -42,6 +47,9 @@ public class GroupActivity extends AppCompatActivity
     private String TAG = "GROUP_ACTIVITY";
 
     private SharedPreferences sp;
+
+    private UsernameDB myDb;
+
 
     /**
      * onCreate method. This sets up the list fragment and
@@ -72,7 +80,8 @@ public class GroupActivity extends AppCompatActivity
                     .commit();
         });
 
-        checkDefaultUsername();
+        myDb = new UsernameDB(getApplicationContext());
+        checkUsername();
     }
 
     @Override
@@ -191,9 +200,9 @@ public class GroupActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String newUsername = editText.getText().toString();
-                // TODO: Use stored username in firebase chat.
-                sp.edit().putBoolean("defaultName", false).apply();
-                sp.edit().putString("username", newUsername).apply();
+                setUsername(newUsername);
+                //sp.edit().putBoolean("defaultName", false).apply();
+                //sp.edit().putString("username", newUsername).apply();
                 dialog.dismiss();
 
             }
@@ -210,6 +219,7 @@ public class GroupActivity extends AppCompatActivity
         return alertDialog;
     }
 
+    // TODO: DELETE after new version is working.
     public void checkDefaultUsername() {
         sp = getSharedPreferences("user", MODE_PRIVATE);
         if (sp.getBoolean("defaultName", true)) {
@@ -227,6 +237,32 @@ public class GroupActivity extends AppCompatActivity
 
         }
 
+    }
+
+    public void checkUsername() {
+        String result = myDb.getUsername();
+        if (result == null) {
+            showDefaultUsernameDialog();
+        }
+
+    }
+
+    public void setUsername(String name) {
+        myDb.setUsername(name);
+    }
+
+    public void showDefaultUsernameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.default_username_alert_title)
+                .setMessage(R.string.default_username_alert_message)
+                .setCancelable(false)
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
 }
