@@ -40,7 +40,7 @@ public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<Message
         String name = mValues.get(position).getName();
         holder.messageTextView.setText(mValues.get(position).getText());
         holder.messengerTextView.setText(name);
-        holder.messageImageView.setColorFilter(name.hashCode());
+        //holder.messageImageView.setColorFilter(name.hashCode());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
