@@ -1,3 +1,35 @@
+# MEGAPHONE SPRINT TWO
+
+## Contributors
+
+Aaron Shouldis
+Brandon Morris
+Jeremy Manandic
+
+## Features implemented (Sprint two)
+
+Firebase now stores groups - Instead of using the Heroku database, we have migrated to the Firebase Firestore cloud database to store the groups. It will now track the location of the epicenter of the group. This is to establish a geofence for the location based chat rooms.
+
+Chatroom implemented - A chatroom is now implemented. When you press a group you will see another activity pop up where you can now talk to other people.
+
+Location-based chatrooms - The list will now filter periodically and will show chatrooms avaliable near you. In the chat room list you can now see the signal strength of the room (Please note for some reason the android emulator does a poor job of smurfing locations)
+
+Send a text-message about the group - You can now send a text message that invites people to go towards the group you've created.
+
+Logout - You can now logout hooray
+
+Set Username - You can now set you're username to whatever you want
+
+App now stores you're username using SQLite and SharedPreferences
+
+App now has a logo and is stylized
+
+## Bugs and deficiencies
+
+TODO....
+
+----------------------------------------------------------
+
 # MEGAPHONE SPRINT ONE
 
 ## Contributors
