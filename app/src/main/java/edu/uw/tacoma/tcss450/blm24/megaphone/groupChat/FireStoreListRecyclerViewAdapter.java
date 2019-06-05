@@ -27,7 +27,6 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
     public FireStoreListRecyclerViewAdapter(List<Group> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
-        LocationHelper.setGroupList(this);
     }
 
     @Override
