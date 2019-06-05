@@ -27,8 +27,7 @@ public class UsernameDB {
     public String getUsername() {
         String result = null;
 
-        Cursor cursor = mSQLiteDatabase.query("USER", new String[]{"Name"}, null, null,
-                                        null, null, null);
+        Cursor cursor = mSQLiteDatabase.query("USER", new String[]{"Name"}, null, null, null, null, null);
 
         if (cursor == null) {
             Log.d("ugh", "CURSOR IS NULL");
@@ -77,4 +76,3 @@ public class UsernameDB {
     }
 
 }
-

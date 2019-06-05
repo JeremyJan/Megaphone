@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         LocationHelper.setup(this);
         // Get shared preferences and check to see if the user is already logged in.
         sp = getSharedPreferences("user", MODE_PRIVATE); // If logged in, go to groups page.
-        if (sp.getBoolean("loggedIn", true)) {
+        if (sp.getBoolean("loggedIn", false)) {
             Intent i = new Intent(this, GroupActivity.class);
             startActivity(i);
         }
@@ -114,19 +114,11 @@ public class LoginActivity extends AppCompatActivity {
 
         Button debugButton = findViewById(R.id.debug_button);
 
-        debugButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
-                sp.edit().putBoolean("defaultName", true).apply();
-                LoginActivity.this.startActivity(intent);
-            }
+        debugButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
+            sp.edit().putBoolean("defaultName", true).apply();
+            LoginActivity.this.startActivity(intent);
         });
-
-
-
-
-
     }
 
 }

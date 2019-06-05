@@ -112,7 +112,7 @@ public class GroupActivity extends AppCompatActivity
                 break;
 
             case R.id.action_logout:
-                SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+                SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
                 sp.edit().putBoolean("loggedIn", false).apply();
                 finish();
                 break;

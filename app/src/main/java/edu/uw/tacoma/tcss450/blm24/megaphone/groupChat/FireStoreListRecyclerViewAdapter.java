@@ -45,14 +45,13 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
         holder.mIdView.setText(group.getName());
         float distance = LocationHelper.distance(lat, lon);
         float radius = group.getRadius();
-        holder.mContentView.setText(String.format("%.1f", 100.0 * (radius - distance)/radius) + '%');
+        float percentage = (radius - distance)/radius * 100.0f;
+        percentage = Math.max(percentage, 0);
+        holder.mContentView.setText(Integer.toString((int) percentage) + '%');
         Log.d("FIRESTORE_RecylerView", "In onBindViewHolder");
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
+        holder.mView.setOnClickListener(v -> {
+            if (null != mListener) {
+                mListener.onListFragmentInteraction(holder.mItem);
             }
         });
     }
@@ -87,7 +86,9 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
             double lon = mItem.getGeoPoint().getLongitude();
             float radius = mItem.getRadius();
             float distance = LocationHelper.distance(lat, lon);
-            mContentView.setText(String.format("%.1f", 100.0 * (radius - distance)/radius) + '%');
+            float percentage = (radius - distance)/radius * 100.0f;
+            percentage = Math.max(percentage, 0);
+            mContentView.setText(Integer.toString((int) percentage) + '%');
         }
     }
 }

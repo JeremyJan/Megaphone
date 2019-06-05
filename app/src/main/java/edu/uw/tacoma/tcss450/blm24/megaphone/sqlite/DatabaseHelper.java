@@ -19,11 +19,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USER_TABLE = "CREATE TABLE USER(Name TEXT PRIMARY KEY NOT NULL)";
-        String INSERT_DEFAULT_NAME = "INSERT INTO USER (Name) VALUES('HuskyHippo')";
+        String INSERT_DEFAULT_NAME = "INSERT INTO USER (Name) VALUES('Anonymous')";
 
         db.rawQuery(CREATE_USER_TABLE, null);
         db.rawQuery(INSERT_DEFAULT_NAME, null);
@@ -54,7 +53,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
             result = cursor.getString(0);
         }
-
 
         return result;
     }
