@@ -68,22 +68,16 @@ public class GroupAddFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_group_add, container, false);
         getActivity().setTitle("Create a Group");
         EditText nameET = view.findViewById(R.id.group_name_edit_text);
-        Switch memberS = view.findViewById(R.id.group_member_message_switch);
-        memberS.setEnabled(false);
-        Switch privateS = view.findViewById(R.id.group_private_switch);
-        privateS.setEnabled(false);
         SeekBar radiusSB = view.findViewById(R.id.radiusBar);
         TextView radiusText = view.findViewById(R.id.radiusBarText);
         Button addButton = view.findViewById(R.id.create_group_button);
         radiusText.setText(Integer.toString(radiusSB.getProgress()));
         addButton.setOnClickListener(v -> {
             String name = nameET.getText().toString();
-            boolean isPrivate = privateS.isChecked();
-            boolean canMembers = memberS.isChecked();
             int radius = radiusSB.getProgress() + 10;
             //We are creating a group here as an object to contain all of the
             //group settings
-            Group mGroup = new Group(name,isPrivate,canMembers,radius
+            Group mGroup = new Group(name, false, false, radius
                     , new GeoPoint(LocationHelper.getLAT(), LocationHelper.getLON()),null);
             //Init the firebase firestore db
             firestoreDB = FirebaseFirestore.getInstance();

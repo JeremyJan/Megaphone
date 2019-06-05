@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
+
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 import edu.uw.tacoma.tcss450.blm24.megaphone.utils.FirebaseUtil;
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessage;
@@ -102,17 +104,15 @@ public class GroupChatActivity extends AppCompatActivity implements
             }
         });
 
-        mSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String theMessage = mMessageEditText.getText().toString();
-                Log.d(TAG, "onClick: " + theMessage);
-                sp = getSharedPreferences("user", MODE_PRIVATE);
-                GroupMessage groupMessage = new GroupMessage(groupID,theMessage,
-                        sp.getString("username", "HuskyHippo"), null);
-                FirebaseUtil.createMessage(groupMessage);
-                mMessageEditText.setText("");
-            }
+        mSendButton.setOnClickListener(v -> {
+            String theMessage = mMessageEditText.getText().toString();
+            Log.d(TAG, "onClick: " + theMessage);
+            sp = getSharedPreferences("user", MODE_PRIVATE);
+            GroupMessage groupMessage = new GroupMessage(groupID,theMessage,
+                    sp.getString("username", "Anonymous"),
+                    Calendar.getInstance().getTime());
+            FirebaseUtil.createMessage(groupMessage);
+            mMessageEditText.setText("");
         });
 
 

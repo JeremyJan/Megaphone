@@ -10,6 +10,7 @@ import android.widget.TextView;
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessageListFragment.OnListFragmentInteractionListener;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -37,18 +38,22 @@ public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<Message
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        String name = mValues.get(position).getName();
-        holder.messageTextView.setText(mValues.get(position).getText());
-        holder.messengerTextView.setText(name);
+        GroupMessage message = holder.mItem;
+        holder.messageTextView.setText(message.getText());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(message.getTimestamp());
+        StringBuilder builder = new StringBuilder();
+        builder.append(message.getName()).append(" - ");
+        builder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(':');
+        builder.append(String.format("%2d", calendar.get(Calendar.MINUTE))
+                .replace(' ', '0'));
+        holder.messengerTextView.setText(builder.toString());
         //holder.messageImageView.setColorFilter(name.hashCode());
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
+        holder.mView.setOnClickListener(v -> {
+            if (null != mListener) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                mListener.onListFragmentInteraction(holder.mItem);
             }
         });
     }

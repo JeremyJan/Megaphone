@@ -34,10 +34,6 @@ public class GroupMessage {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getName() {
         return name;
     }
@@ -48,9 +44,5 @@ public class GroupMessage {
 
     public Date getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
     }
 }
