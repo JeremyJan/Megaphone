@@ -74,7 +74,7 @@ public class GroupAddFragment extends Fragment {
         radiusText.setText(Integer.toString(radiusSB.getProgress()));
         addButton.setOnClickListener(v -> {
             String name = nameET.getText().toString();
-            int radius = radiusSB.getProgress() + 10;
+            int radius = radiusSB.getProgress() * 10 + 10;
             //We are creating a group here as an object to contain all of the
             //group settings
             Group mGroup = new Group(name, false, false, radius
@@ -92,11 +92,11 @@ public class GroupAddFragment extends Fragment {
             getActivity().getSupportFragmentManager().popBackStack(); //this maybe works????
             mListener.onGroupAddFragmentInteraction(mGroup);
         });
-        radiusText.setText("10");
+        radiusText.setText("10m");
         radiusSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                radiusText.setText(Integer.toString(progress + 10));
+                radiusText.setText(Integer.toString(progress * 10 + 10) + 'm');
             }
 
             @Override

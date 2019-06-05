@@ -11,6 +11,7 @@ import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessageListFragment.
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,12 +42,17 @@ public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<Message
         GroupMessage message = holder.mItem;
         holder.messageTextView.setText(message.getText());
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(message.getTimestamp());
+        Date date = message.getTimestamp();
         StringBuilder builder = new StringBuilder();
-        builder.append(message.getName()).append(" - ");
-        builder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(':');
-        builder.append(String.format("%2d", calendar.get(Calendar.MINUTE))
-                .replace(' ', '0'));
+        builder.append(message.getName());
+        if(date != null) {
+            builder.append(" - ");
+            calendar.setTime(date);
+            builder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(':');
+            builder.append(String.format("%2d", calendar.get(Calendar.MINUTE))
+                    .replace(' ', '0'));
+        }
+
         holder.messengerTextView.setText(builder.toString());
         //holder.messageImageView.setColorFilter(name.hashCode());
         holder.mView.setOnClickListener(v -> {

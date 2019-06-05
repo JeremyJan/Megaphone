@@ -39,8 +39,6 @@ public class GroupActivity extends AppCompatActivity
         GroupListFragment.OnGroupListFragmentInteractionListener,
         GroupFireStoreListFragment.OnListFragmentInteractionListener{
 
-    private JSONObject args;
-
     private String TAG = "GROUP_ACTIVITY";
 
     private SharedPreferences sp;
@@ -59,7 +57,6 @@ public class GroupActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setTitle("Local Groups");
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         FloatingActionButton fab = findViewById(R.id.fab);
 
         //add list
