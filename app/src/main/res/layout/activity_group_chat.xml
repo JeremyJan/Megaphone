@@ -10,12 +10,6 @@
     android:paddingTop="16dp"
     tools:context=".groupChat.GroupChatActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/group_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <FrameLayout
         android:id="@+id/fragment_chat_container"
