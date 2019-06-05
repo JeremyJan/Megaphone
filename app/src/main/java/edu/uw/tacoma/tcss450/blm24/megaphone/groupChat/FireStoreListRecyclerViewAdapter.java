@@ -47,9 +47,7 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
         builder.append(LocationHelper.distanceString(lat, lon));
         builder.append("m away");
         holder.mContentView.setText(builder.toString());
-
         Log.d("FIRESTORE_RecylerView", "In onBindViewHolder");
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +63,7 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements LocationHelper.LatLonListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -76,11 +74,19 @@ public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireS
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
+            LocationHelper.registerListener(this);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
+        }
+
+        @Override
+        public void update() {
+            double lat = mItem.getGeoPoint().getLatitude();
+            double lon = mItem.getGeoPoint().getLongitude();
+            mContentView.setText(LocationHelper.distanceString(lat, lon)+"m away");
         }
     }
 }

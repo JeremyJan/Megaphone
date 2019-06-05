@@ -34,9 +34,8 @@ import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
  */
 public class GroupFireStoreListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -46,7 +45,9 @@ public class GroupFireStoreListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public GroupFireStoreListFragment() {
+
     }
+
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")

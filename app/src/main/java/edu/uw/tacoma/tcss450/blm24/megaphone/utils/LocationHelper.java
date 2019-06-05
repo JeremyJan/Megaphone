@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public final class LocationHelper {
 
     private static Double LAT, LON;
@@ -19,6 +22,8 @@ public final class LocationHelper {
     private static LocationManager MANAGER;
     private static LocationListener LISTENER;
     private static String PROVIDER;
+
+    private static final List<LatLonListener> listeners = new LinkedList<>();
 
     private static String[] PERMISSIONS = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -52,9 +57,15 @@ public final class LocationHelper {
         Criteria crit = new Criteria();
         crit.setAccuracy(Criteria.ACCURACY_FINE);
         PROVIDER = MANAGER.getBestProvider(crit, true);
-        MANAGER.requestLocationUpdates(PROVIDER, 5000, 1f, listener);
+        MANAGER.requestLocationUpdates(PROVIDER, 500, 1f, listener);
         LISTENER = listener;
         return true;
+    }
+
+    public static void registerListener(LatLonListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
     }
 
     public static Double getLAT() {
@@ -87,7 +98,7 @@ public final class LocationHelper {
 
     public static String distanceString(double lat, double lon) {
         Float distance = distance(lat, lon);
-        if(distance == null) {
+        if (distance == null) {
             return null;
         }
         return String.format("%.2f", distance);
@@ -99,6 +110,9 @@ public final class LocationHelper {
         public void onLocationChanged(Location location) {
             LAT = location.getLatitude();
             LON = location.getLongitude();
+            for(LatLonListener listener : listeners) {
+                listener.update();
+            }
             Log.i("Location", LAT +", " + LON);
         }
 
@@ -117,4 +131,11 @@ public final class LocationHelper {
 
         }
     }
+
+    public interface LatLonListener {
+
+        void update();
+
+    }
+
 }
