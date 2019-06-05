@@ -13,12 +13,14 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 import edu.uw.tacoma.tcss450.blm24.megaphone.utils.FirebaseUtil;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 
 /**
@@ -65,41 +67,37 @@ public class GroupAddFragment extends Fragment {
                              Bundle savedInstanceState) {
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
         View view = inflater.inflate(R.layout.fragment_group_add, container, false);
+        getActivity().setTitle("Create a Group");
         EditText nameET = view.findViewById(R.id.group_name_edit_text);
-        Switch memberS = view.findViewById(R.id.group_member_message_switch);
-        memberS.setEnabled(false);
-        Switch privateS = view.findViewById(R.id.group_private_switch);
-        privateS.setEnabled(false);
         SeekBar radiusSB = view.findViewById(R.id.radiusBar);
         TextView radiusText = view.findViewById(R.id.radiusBarText);
         Button addButton = view.findViewById(R.id.create_group_button);
         radiusText.setText(Integer.toString(radiusSB.getProgress()));
         addButton.setOnClickListener(v -> {
             String name = nameET.getText().toString();
-            boolean isPrivate = privateS.isChecked();
-            boolean canMembers = memberS.isChecked();
-            int radius = radiusSB.getProgress();
+            int radius = radiusSB.getProgress() * 10 + 10;
             //We are creating a group here as an object to contain all of the
             //group settings
-            Group mGroup = new Group(name,isPrivate,canMembers,radius
-                    , new GeoPoint(50,-50), null);
+            Group mGroup = new Group(name, false, false, radius
+                    , new GeoPoint(LocationHelper.getLAT(), LocationHelper.getLON()),null);
             //Init the firebase firestore db
             firestoreDB = FirebaseFirestore.getInstance();
             fbUtil = new FirebaseUtil(firestoreDB);
             //this util function will add the group to the firestore database.
             fbUtil.createGroup(mGroup);
             mGroup.setGroupID(fbUtil.getGroupId());
-            Intent newIntent = new Intent(getActivity(), GroupChatActivity.class);
-            newIntent.putExtra(GroupChatActivity.GROUPID, fbUtil.getGroupId());
-            newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());
-            startActivity(newIntent);
+            //Intent newIntent = new Intent(getActivity(), GroupChatActivity.class);
+            //newIntent.putExtra(GroupChatActivity.GROUPID, mGroup.getGroupID());
+            //newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());
+            //startActivity(newIntent);
             getActivity().getSupportFragmentManager().popBackStack(); //this maybe works????
             mListener.onGroupAddFragmentInteraction(mGroup);
         });
+        radiusText.setText("10m");
         radiusSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                radiusText.setText(Integer.toString(progress + 10));
+                radiusText.setText(Integer.toString(progress * 10 + 10) + 'm');
             }
 
             @Override

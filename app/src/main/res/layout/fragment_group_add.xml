@@ -6,77 +6,36 @@
     android:orientation="vertical"
     tools:context=".groupChat.GroupAddFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/group_header"
-        android:layout_margin="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create a Group"/>
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:hint="@string/enter_group_name"
         android:id="@+id/group_name_edit_text"/>
 
     <TextView
         android:id="@+id/radiusBarText"
         android:layout_margin="20dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="setup radius text in onCreate"/>
+        android:gravity="center"
+        android:textSize="24dp"/>
 
     <SeekBar
         android:id="@+id/radiusBar"
-        android:max="90"
-        android:progress="0"
+        android:max="9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.SeekBar.Discrete" />
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="2">
-
-        <TextView
-            android:id="@+id/memberMessageToggleCheck"
-            android:layout_margin="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Allow memebers to send messages?"
-            />
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/group_member_message_switch"/>
-
-        <TextView
-            android:id="@+id/makePrivateText"
-            android:layout_margin="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Make group private?"
-            />
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/group_private_switch"/>
-
-    </GridLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@color/megaphonePurple"
+        android:textColor="#FFFF"
         android:id="@+id/create_group_button"/>
 
 </LinearLayout>

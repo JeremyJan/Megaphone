@@ -6,8 +6,6 @@
     android:name="edu.uw.tacoma.tcss450.blm24.megaphone.GroupFireStoreListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".groupChat.GroupFireStoreListFragment"
     tools:listitem="@layout/fragment_groupfirestorelist" />

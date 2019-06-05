@@ -1,5 +1,6 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
+import android.location.LocationListener;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupFireStoreListFragment.OnListFragmentInteractionListener;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 import java.util.List;
 
@@ -17,12 +19,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupFireStoreListRecyclerViewAdapter.ViewHolder> {
+public class FireStoreListRecyclerViewAdapter extends RecyclerView.Adapter<FireStoreListRecyclerViewAdapter.ViewHolder> {
 
     private final List<Group> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyGroupFireStoreListRecyclerViewAdapter(List<Group> items, OnListFragmentInteractionListener listener) {
+    public FireStoreListRecyclerViewAdapter(List<Group> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,11 +39,14 @@ public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getName());
-        holder.mContentView.setText("Radius: " + Integer.toString(mValues.get(position).getRadius()));
-
+        Group group = mValues.get(position);
+        double lat = group.getGeoPoint().getLatitude();
+        double lon = group.getGeoPoint().getLongitude();
+        holder.mIdView.setText(group.getName());
+        float distance = LocationHelper.distance(lat, lon);
+        float radius = group.getRadius();
+        holder.mContentView.setText(String.format("%.1f", 100.0 * (radius - distance)/radius) + '%');
         Log.d("FIRESTORE_RecylerView", "In onBindViewHolder");
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +62,7 @@ public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapte
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements LocationHelper.LatLonListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -66,13 +71,23 @@ public class MyGroupFireStoreListRecyclerViewAdapter extends RecyclerView.Adapte
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.content);
+            LocationHelper.registerListener(this);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
+        }
+
+        @Override
+        public void update() {
+            double lat = mItem.getGeoPoint().getLatitude();
+            double lon = mItem.getGeoPoint().getLongitude();
+            float radius = mItem.getRadius();
+            float distance = LocationHelper.distance(lat, lon);
+            mContentView.setText(String.format("%.1f", 100.0 * (radius - distance)/radius) + '%');
         }
     }
 }

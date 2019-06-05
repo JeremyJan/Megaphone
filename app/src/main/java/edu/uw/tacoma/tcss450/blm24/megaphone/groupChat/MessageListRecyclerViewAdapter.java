@@ -4,11 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessageListFragment.OnListFragmentInteractionListener;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,12 +19,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyGroupMessageListRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupMessageListRecyclerViewAdapter.ViewHolder> {
+public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<MessageListRecyclerViewAdapter.ViewHolder> {
 
     private final List<GroupMessage> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyGroupMessageListRecyclerViewAdapter(List<GroupMessage> items, OnListFragmentInteractionListener listener) {
+    public MessageListRecyclerViewAdapter(List<GroupMessage> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,17 +39,27 @@ public class MyGroupMessageListRecyclerViewAdapter extends RecyclerView.Adapter<
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.messageTextView.setText(mValues.get(position).getText());
-        holder.messengerTextView.setText(mValues.get(position).getName());
+        GroupMessage message = holder.mItem;
+        holder.messageTextView.setText(message.getText());
+        Calendar calendar = Calendar.getInstance();
+        Date date = message.getTimestamp();
+        StringBuilder builder = new StringBuilder();
+        builder.append(message.getName());
+        if(date != null) {
+            builder.append(" - ");
+            calendar.setTime(date);
+            builder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(':');
+            builder.append(String.format("%2d", calendar.get(Calendar.MINUTE))
+                    .replace(' ', '0'));
+        }
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
+        holder.messengerTextView.setText(builder.toString());
+        //holder.messageImageView.setColorFilter(name.hashCode());
+        holder.mView.setOnClickListener(v -> {
+            if (null != mListener) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                mListener.onListFragmentInteraction(holder.mItem);
             }
         });
     }
@@ -60,13 +73,15 @@ public class MyGroupMessageListRecyclerViewAdapter extends RecyclerView.Adapter<
         public final View mView;
         public final TextView messageTextView;
         public final TextView messengerTextView;
+        public final ImageView messageImageView;
         public GroupMessage mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            messageTextView = (TextView) view.findViewById(R.id.messageTextView);
-            messengerTextView = (TextView) view.findViewById(R.id.messengerTextView);
+            messageTextView = view.findViewById(R.id.messageTextView);
+            messengerTextView = view.findViewById(R.id.messengerTextView);
+            messageImageView = view.findViewById(R.id.messengerImageView);
         }
 
         @Override

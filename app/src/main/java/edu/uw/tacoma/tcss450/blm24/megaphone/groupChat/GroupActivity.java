@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+
 import android.database.sqlite.SQLiteDatabase;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -28,8 +30,10 @@ import org.json.JSONObject;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.depreciated.GroupListFragment;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+
 import edu.uw.tacoma.tcss450.blm24.megaphone.sqlite.DatabaseHelper;
 import edu.uw.tacoma.tcss450.blm24.megaphone.sqlite.UsernameDB;
+import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
 
 /**
@@ -41,8 +45,6 @@ public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
         GroupListFragment.OnGroupListFragmentInteractionListener,
         GroupFireStoreListFragment.OnListFragmentInteractionListener{
-
-    private JSONObject args;
 
     private String TAG = "GROUP_ACTIVITY";
 
@@ -63,8 +65,8 @@ public class GroupActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.getMenu();
         setSupportActionBar(toolbar);
+        setTitle("Local Groups");
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         FloatingActionButton fab = findViewById(R.id.fab);
 
         //add list
@@ -82,6 +84,8 @@ public class GroupActivity extends AppCompatActivity
 
         myDb = new UsernameDB(getApplicationContext());
         checkUsername();
+        LocationHelper.setup(this);
+
     }
 
     @Override

@@ -5,8 +5,11 @@
     android:id="@+id/loginPageActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity">
+    tools:context=".login.LoginActivity"
+    android:background="#FFFF">
 
+
+    <!--
     <TextView
         android:id="@+id/welcomeMessage"
         android:layout_width="379dp"
@@ -21,6 +24,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+        -->
 
     <EditText
         android:id="@+id/emailInputField"
@@ -59,16 +63,15 @@
         android:layout_height="234dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/megaphone_logo"
         app:layout_constraintBottom_toTopOf="@+id/emailInputField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeMessage"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/megaphone_logo" />
 
     <TextView

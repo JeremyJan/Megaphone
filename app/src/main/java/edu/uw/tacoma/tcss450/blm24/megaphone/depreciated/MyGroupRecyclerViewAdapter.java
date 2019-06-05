@@ -60,9 +60,9 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getName());
-        holder.mContentView.setText(mValues.get(position).getRadius());
-        Log.d("GROUP_RECYLER", mValues.get(position).getName());
+        holder.mIdView.setText(holder.mItem.getName());
+        holder.mContentView.setText(holder.mItem.getRadius());
+        Log.d("GROUP_RECYLER", holder.mItem.getName());
         //TODO change
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -74,7 +75,6 @@ public class GroupMessageListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_groupmessagelist_list, container, false);
-
         Bundle bundle = this.getArguments();
         String groupID = bundle.getString("groupID");
         Log.d(TAG, "onCreateView: ");
@@ -90,19 +90,15 @@ public class GroupMessageListFragment extends Fragment {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("messages").whereEqualTo("id", groupID)
                     .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    groupMessages.clear();
-                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        GroupMessage mGroup = snapshot.toObject(GroupMessage.class);
-                        Log.d(TAG, "onEvent: groupMessage = " + mGroup.getText());
-                        groupMessages.add(mGroup);
-                    }
-                    recyclerView.setAdapter(new MyGroupMessageListRecyclerViewAdapter(groupMessages, mListener));
-                }
-
-            });        }
+                    .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                        groupMessages.clear();
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                            GroupMessage mGroup = snapshot.toObject(GroupMessage.class);
+                            Log.d(TAG, "onEvent: groupMessage = " + mGroup.getText());
+                            groupMessages.add(mGroup);
+                        }
+                        recyclerView.setAdapter(new MessageListRecyclerViewAdapter(groupMessages, mListener));
+                    });        }
         return view;
     }
 
