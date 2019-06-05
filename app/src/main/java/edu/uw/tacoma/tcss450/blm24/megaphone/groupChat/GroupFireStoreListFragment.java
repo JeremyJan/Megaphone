@@ -86,7 +86,7 @@ public class GroupFireStoreListFragment extends Fragment implements LocationHelp
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Rooms").orderBy("timestamp", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            db.collection("Rooms").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     groups.clear();

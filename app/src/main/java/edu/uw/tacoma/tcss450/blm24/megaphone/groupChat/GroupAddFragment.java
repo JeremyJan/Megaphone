@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -85,10 +86,10 @@ public class GroupAddFragment extends Fragment {
             //this util function will add the group to the firestore database.
             fbUtil.createGroup(mGroup);
             mGroup.setGroupID(fbUtil.getGroupId());
-            Intent newIntent = new Intent(getActivity(), GroupChatActivity.class);
-            newIntent.putExtra(GroupChatActivity.GROUPID, fbUtil.getGroupId());
-            newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());
-            startActivity(newIntent);
+            //Intent newIntent = new Intent(getActivity(), GroupChatActivity.class);
+            //newIntent.putExtra(GroupChatActivity.GROUPID, mGroup.getGroupID());
+            //newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());
+            //startActivity(newIntent);
             getActivity().getSupportFragmentManager().popBackStack(); //this maybe works????
             mListener.onGroupAddFragmentInteraction(mGroup);
         });
