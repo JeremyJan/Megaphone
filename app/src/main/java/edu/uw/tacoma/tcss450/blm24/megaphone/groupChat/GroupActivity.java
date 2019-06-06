@@ -18,6 +18,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -128,6 +129,8 @@ public class GroupActivity extends AppCompatActivity
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 final EditText editText = new EditText(this);
+                editText.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL | InputType.TYPE_CLASS_NUMBER);
+
                 builder.setTitle(R.string.share_content_alert_title)
                         .setMessage(R.string.share_content_alert_message)
                         .setCancelable(false)
@@ -137,9 +140,18 @@ public class GroupActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 // Create sms manager to handle texting.
                                 SmsManager manager = SmsManager.getDefault();
+                                // Get a link to the device's sqlite database.
+                                UsernameDB db = new UsernameDB(getApplicationContext());
                                 // Send the message.
+                                String inputText = editText.getText().toString();
+                                while (inputText.length() < 10) {
+                                    Toast.makeText(getApplicationContext(), "Enter a valid phone number.", Toast.LENGTH_LONG)
+                                            .show();
+                                    return;
+                                }
+
                                 manager.sendTextMessage(editText.getText().toString(), null,
-                                        getString(R.string.share_content_text_message_content_1),
+                                        db.getUsername() + getString(R.string.share_content_text_message_content_1),
                                         null, null);
 
                                 // Notify the user that the message was sent.
@@ -223,26 +235,9 @@ public class GroupActivity extends AppCompatActivity
         return alertDialog;
     }
 
-    // TODO: DELETE after new version is working.
-    public void checkDefaultUsername() {
-        sp = getSharedPreferences("user", MODE_PRIVATE);
-        if (sp.getBoolean("defaultName", true)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.default_username_alert_title)
-                    .setMessage(R.string.default_username_alert_message)
-                    .setCancelable(false)
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            builder.create().show();
-
-        }
-
-    }
-
+    /**
+     * Checks the username currently stored in the SQLite database.
+     */
     public void checkUsername() {
         String result = myDb.getUsername();
         if (result == null) {
@@ -251,10 +246,18 @@ public class GroupActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Sets a new username to the SQLite database. This username is visible in groupchats.
+     * @param name The new username to save into the database.
+     */
     public void setUsername(String name) {
         myDb.setUsername(name);
     }
 
+    /**
+     * Creates a dialog prompt telling the user they are using the default chat name and that
+     * they are able to change it to their liking.
+     */
     public void showDefaultUsernameDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.default_username_alert_title)
