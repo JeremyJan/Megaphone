@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
+import edu.uw.tacoma.tcss450.blm24.megaphone.sqlite.UsernameDB;
 import edu.uw.tacoma.tcss450.blm24.megaphone.utils.FirebaseUtil;
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessage;
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupMessageListFragment;
@@ -107,9 +108,9 @@ public class GroupChatActivity extends AppCompatActivity implements
         mSendButton.setOnClickListener(v -> {
             String theMessage = mMessageEditText.getText().toString();
             Log.d(TAG, "onClick: " + theMessage);
-            sp = getSharedPreferences("user", MODE_PRIVATE);
+            UsernameDB db = new UsernameDB(getApplicationContext());
             GroupMessage groupMessage = new GroupMessage(groupID,theMessage,
-                    sp.getString("username", "Anonymous"),
+                    db.getUsername(),
                     Calendar.getInstance().getTime());
             FirebaseUtil.createMessage(groupMessage);
             mMessageEditText.setText("");
