@@ -26,7 +26,7 @@ App now has a logo and is stylized
 
 ## Bugs and deficiencies
 
-TODO....
+TODO.... haha
 
 ----------------------------------------------------------
 
