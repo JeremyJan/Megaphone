@@ -39,6 +39,10 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
         }
 
+        //Hide debug button
+        View debug = findViewById(R.id.debug_button);
+        debug.setVisibility(View.INVISIBLE);
+
         buttonInit();
     }
 
