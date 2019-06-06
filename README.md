@@ -26,7 +26,11 @@ App now has a logo and is stylized
 
 ## Bugs and deficiencies
 
-Setting username doesn't work - This is caused by trying to retrieve the username from SQLite.
+Changing locations on the android studio emulator can cause a glitch where the list shows a negative percentage
+
+Send a text-message doesn't work on emulator
+
+A minimum sdk version of 21 due to multidex
 
 ## Other comments
 If you wish to see the Firebase database email jemlc@uw.edu so we can add you as a viewer.
