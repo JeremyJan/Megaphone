@@ -12,7 +12,7 @@ Firebase now stores groups - Instead of using the Heroku database, we have migra
 
 Chatroom implemented - A chatroom is now implemented. When you press a group you will see another activity pop up where you can now talk to other people.
 
-Location-based chatrooms - The list will now filter periodically and will show chatrooms avaliable near you. In the chat room list you can now see the signal strength of the room (Please note for some reason the android emulator does a poor job of smurfing locations)
+Location-based chatrooms - The list will now filter periodically and will show chatrooms avaliable near you. In the chat room list you can now see the signal strength of the room (Please note for some reason the android emulator does a poor job of smurfing locations) (A location to try if on emulator Lat: 47.577013333333326, Lon: -121.64113166666667. This should be the location of UWT)
 
 Send a text-message about the group - You can now send a text message that invites people to go towards the group you've created.
 
@@ -26,7 +26,10 @@ App now has a logo and is stylized
 
 ## Bugs and deficiencies
 
-TODO.... haha
+Setting username doesn't work - This is caused by trying to retrieve the username from SQLite.
+
+## Other comments
+If you wish to see the Firebase database email jemlc@uw.edu so we can add you as a viewer.
 
 ----------------------------------------------------------
 
