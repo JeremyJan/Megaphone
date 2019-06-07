@@ -31,7 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        LocationHelper.setup(this);
+        if(!LocationHelper.setup(this)) {
+            Toast.makeText(this, "Location services unavailable", Toast.LENGTH_LONG).show();
+        }
         // Get shared preferences and check to see if the user is already logged in.
         sp = getSharedPreferences("user", MODE_PRIVATE); // If logged in, go to groups page.
         if (sp.getBoolean("loggedIn", false)) {

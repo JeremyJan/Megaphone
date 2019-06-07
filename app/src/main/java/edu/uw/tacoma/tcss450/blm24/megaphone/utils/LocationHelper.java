@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,11 +26,6 @@ public final class LocationHelper {
 
     private static final List<LatLonListener> listeners = new LinkedList<>();
 
-    private static String[] PERMISSIONS = {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
-
     public static boolean setup(Activity activity) {
         if (LISTENER != null) {
             return true;
@@ -39,14 +35,14 @@ public final class LocationHelper {
         }
         boolean enabled = false;
         boolean permissed = false;
-        while (!permissed) {
-            ActivityCompat.requestPermissions(activity, PERMISSIONS, 0);
-            permissed |= ActivityCompat.checkSelfPermission(activity,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED;
-            permissed |= ActivityCompat.checkSelfPermission(activity,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED;
+        ActivityCompat.requestPermissions(activity, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+        ActivityCompat.requestPermissions(activity, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+        permissed |= ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED;
+        permissed |= ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED;
+        if(!permissed) {
+            return false;
         }
         enabled |= MANAGER.isProviderEnabled(LocationManager.GPS_PROVIDER);
         enabled |= MANAGER.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -57,7 +53,13 @@ public final class LocationHelper {
         Criteria crit = new Criteria();
         crit.setAccuracy(Criteria.ACCURACY_FINE);
         PROVIDER = MANAGER.getBestProvider(crit, true);
-        MANAGER.requestLocationUpdates(PROVIDER, 1000, 1f, listener);
+        if(PROVIDER == null) {
+            return false;
+        }
+        MANAGER.requestLocationUpdates(PROVIDER, 250, 0.5f, listener);
+        Location last = MANAGER.getLastKnownLocation(PROVIDER);
+        LAT = last.getLatitude();
+        LON = last.getLongitude();
         LISTENER = listener;
         return true;
     }
@@ -94,14 +96,6 @@ public final class LocationHelper {
             Log.e("Location", "Cannot get last location.");
         }
         return distance;
-    }
-
-    public static String distanceString(double lat, double lon) {
-        Float distance = distance(lat, lon);
-        if (distance == null) {
-            return null;
-        }
-        return String.format("%.2f", distance);
     }
 
     private static class Listener implements LocationListener {

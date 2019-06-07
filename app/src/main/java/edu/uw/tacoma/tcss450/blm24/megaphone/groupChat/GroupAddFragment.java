@@ -1,9 +1,11 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,22 +78,27 @@ public class GroupAddFragment extends Fragment {
         addButton.setOnClickListener(v -> {
             String name = nameET.getText().toString();
             int radius = radiusSB.getProgress() * 10 + 10;
-            //We are creating a group here as an object to contain all of the
-            //group settings
-            Group mGroup = new Group(name, false, false, radius
-                    , new GeoPoint(LocationHelper.getLAT(), LocationHelper.getLON()),null);
-            //Init the firebase firestore db
-            firestoreDB = FirebaseFirestore.getInstance();
-            fbUtil = new FirebaseUtil(firestoreDB);
-            //this util function will add the group to the firestore database.
-            fbUtil.createGroup(mGroup);
-            mGroup.setGroupID(fbUtil.getGroupId());
-            //Intent newIntent = new Intent(getActivity(), GroupChatActivity.class);
-            //newIntent.putExtra(GroupChatActivity.GROUPID, mGroup.getGroupID());
-            //newIntent.putExtra(GroupChatActivity.GROUPNAME, mGroup.getName());
-            //startActivity(newIntent);
-            getActivity().getSupportFragmentManager().popBackStack(); //this maybe works????
-            mListener.onGroupAddFragmentInteraction(mGroup);
+            //We are creating a group here as an object to contain all of the group settingss
+            double lat, lon;
+            if(!LocationHelper.setup(getActivity())) {
+                Toast.makeText(getActivity(), "Location services unavailable", Toast.LENGTH_LONG).show();
+            }
+            if (LocationHelper.hasLocation()) {
+                lat = LocationHelper.getLAT().floatValue();
+                lon = LocationHelper.getLON().floatValue();
+                Group mGroup = new Group(name, false, false, radius, new GeoPoint(lat, lon),null);
+                //Init the firebase firestore db
+                firestoreDB = FirebaseFirestore.getInstance();
+                fbUtil = new FirebaseUtil(firestoreDB);
+                //this util function will add the group to the firestore database.
+                fbUtil.createGroup(mGroup);
+                mGroup.setGroupID(fbUtil.getGroupId());
+                getActivity().getSupportFragmentManager().popBackStack(); //this maybe works????
+                mListener.onGroupAddFragmentInteraction(mGroup);
+            } else {
+                Toast.makeText(getActivity(), "No location available", Toast.LENGTH_LONG).show();
+            }
+
         });
         radiusText.setText("10m");
         radiusSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

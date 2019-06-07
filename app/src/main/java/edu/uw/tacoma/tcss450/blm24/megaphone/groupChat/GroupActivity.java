@@ -85,8 +85,9 @@ public class GroupActivity extends AppCompatActivity
 
         myDb = new UsernameDB(getApplicationContext());
         checkUsername();
-        LocationHelper.setup(this);
-
+        if(!LocationHelper.setup(this)) {
+            Toast.makeText(this, "Location services unavailable", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
