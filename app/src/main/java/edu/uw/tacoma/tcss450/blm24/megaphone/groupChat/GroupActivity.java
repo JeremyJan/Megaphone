@@ -1,18 +1,14 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,14 +21,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.auth.User;
-
-import org.json.JSONObject;
-
-import edu.uw.tacoma.tcss450.blm24.megaphone.depreciated.GroupListFragment;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
 
-import edu.uw.tacoma.tcss450.blm24.megaphone.sqlite.DatabaseHelper;
 import edu.uw.tacoma.tcss450.blm24.megaphone.sqlite.UsernameDB;
 import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
 
@@ -44,7 +34,6 @@ import edu.uw.tacoma.tcss450.blm24.megaphone.utils.LocationHelper;
  */
 public class GroupActivity extends AppCompatActivity
         implements GroupAddFragment.OnGroupAddragmentInteractionListener,
-        GroupListFragment.OnGroupListFragmentInteractionListener,
         GroupFireStoreListFragment.OnListFragmentInteractionListener{
 
     private String TAG = "GROUP_ACTIVITY";
@@ -104,8 +93,7 @@ public class GroupActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Switch cases to get correct action for each menu item.
-        switch(item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.action_change_username:
                 AlertDialog.Builder alertBuilder = changeUsernameAlertDialogAction();
                 alertBuilder.setCancelable(false);
@@ -125,7 +113,7 @@ public class GroupActivity extends AppCompatActivity
                         Manifest.permission.SEND_SMS)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.SEND_SMS},1);
+                            new String[]{Manifest.permission.SEND_SMS}, 1);
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -156,7 +144,7 @@ public class GroupActivity extends AppCompatActivity
                                         null, null);
 
                                 // Notify the user that the message was sent.
-                                Toast.makeText(getApplicationContext(),"Message sent!", Toast.LENGTH_SHORT)
+                                Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_SHORT)
                                         .show();
                             }
                         })
@@ -175,11 +163,6 @@ public class GroupActivity extends AppCompatActivity
 
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onGroupListFragmentInteraction(Group group) {
-
     }
 
     /**
