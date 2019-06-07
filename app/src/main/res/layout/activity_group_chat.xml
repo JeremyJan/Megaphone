@@ -4,19 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
     tools:context=".groupChat.GroupChatActivity">
-
 
     <FrameLayout
         android:id="@+id/fragment_chat_container"
-        android:layout_width="390dp"
-        android:layout_height="620dp"
+        android:layout_width="match_parent"
+        android:layout_height="640dp"
         android:layout_above="@+id/linearLayout"
-        android:layout_marginBottom="31dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -29,21 +23,36 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/megaphonePurple">
 
-        <EditText
-            android:id="@+id/messageEditText"
+        <LinearLayout
+            android:id="@+id/border_wrap"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="#FFF">
+
+            <EditText
+                android:id="@+id/messageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="1dp"
+                android:background="@color/megaphonePurple"
+                android:textColor="#FFF"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:enabled="false"
+            android:layout_margin="1dp"
+            android:background="@color/megaphonePurple"
+            android:textColor="#FFF"
             android:text="SEND"/>
 
     </LinearLayout>
