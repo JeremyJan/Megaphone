@@ -43,6 +43,8 @@ public class GroupFireStoreListFragment extends Fragment implements LocationHelp
     public List<Group> groups = new ArrayList<>();
     public List<Group> allGroups = new ArrayList<>();
 
+    private FireStoreListRecyclerViewAdapter adapter;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -107,9 +109,9 @@ public class GroupFireStoreListFragment extends Fragment implements LocationHelp
                             }
                         }
                         allGroups.add(mGroup);
-
                     }
-                    recyclerView.setAdapter(new FireStoreListRecyclerViewAdapter(groups, mListener));
+                    adapter = new FireStoreListRecyclerViewAdapter(groups, mListener);
+                    recyclerView.setAdapter(adapter);
                 }
 
             });
@@ -134,19 +136,28 @@ public class GroupFireStoreListFragment extends Fragment implements LocationHelp
         double lat, lon;
         float distance;
         float radius;
+        boolean changed = false;
+        Log.i("Update", "Called");
         for(Group group : allGroups) {
             lat = group.getGeoPoint().getLatitude();
             lon = group.getGeoPoint().getLongitude();
             distance = LocationHelper.distance(lat, lon);
             radius = group.getRadius();
+            Log.i("Update", "From " + group.getGeoPoint().getLongitude());
+            Log.i("Update", "D: "+ distance +" R: "+ radius +" Contained: "+ groups.contains(group));
             if (groups.contains(group)) {
                 if(distance > radius) {
                     groups.remove(group);
+                    changed |= true;
                 }
+                Log.i("Update", "Removed: "+ !groups.contains(group));
             } else if (distance < radius) {
                 groups.add(group);
-                groups.add(group);
+                changed |= true;
             }
+        }
+        if(changed) {
+            adapter.notifyDataSetChanged();
         }
     }
 
