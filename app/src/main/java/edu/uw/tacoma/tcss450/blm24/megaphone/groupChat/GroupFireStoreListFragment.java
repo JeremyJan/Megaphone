@@ -135,26 +135,24 @@ public class GroupFireStoreListFragment extends Fragment implements LocationHelp
         float distance;
         float radius;
         boolean changed = false;
-        Log.i("Update", "Called");
         for(Group group : allGroups) {
             lat = group.getGeoPoint().getLatitude();
             lon = group.getGeoPoint().getLongitude();
             distance = LocationHelper.distance(lat, lon);
             radius = group.getRadius();
-            Log.i("Update", "From " + group.getGeoPoint().getLongitude());
-            Log.i("Update", "D: "+ distance +" R: "+ radius +" Contained: "+ groups.contains(group));
+            Log.i("Update", "Distance: "+ distance +" Radius: "+ radius +" Active: "+ groups.contains(group));
             if (groups.contains(group)) {
                 if(distance > radius) {
                     groups.remove(group);
                     changed |= true;
                 }
-                Log.i("Update", "Removed: "+ !groups.contains(group));
             } else if (distance < radius) {
                 groups.add(group);
                 changed |= true;
             }
         }
         if(changed) {
+            Log.i("Update", "Local groups altered");
             adapter.notifyDataSetChanged();
         }
     }
