@@ -40,6 +40,8 @@ public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<Message
         holder.mItem = mValues.get(position);
         GroupMessage message = holder.mItem;
         holder.messageTextView.setText(message.getText());
+        char c = message.getName().charAt(0);
+        holder.messageLetter.setText(String.valueOf(message.getName().charAt(0)));
         Calendar calendar = Calendar.getInstance();
         Date date = message.getTimestamp();
         StringBuilder builder = new StringBuilder();
@@ -72,7 +74,7 @@ public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<Message
         public final View mView;
         public final TextView messageTextView;
         public final TextView messengerTextView;
-        public final ImageView messageImageView;
+        public final TextView messageLetter;
         public GroupMessage mItem;
 
         public ViewHolder(View view) {
@@ -80,7 +82,7 @@ public class MessageListRecyclerViewAdapter extends RecyclerView.Adapter<Message
             mView = view;
             messageTextView = view.findViewById(R.id.messageTextView);
             messengerTextView = view.findViewById(R.id.messengerTextView);
-            messageImageView = view.findViewById(R.id.messengerImageView);
+            messageLetter = view.findViewById(R.id.messengerLetter);
         }
 
         @Override
