@@ -53,8 +53,6 @@ public class GroupFireStoreListFragment extends Fragment implements LocationHelp
 
     }
 
-
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static GroupFireStoreListFragment newInstance(int columnCount) {
         GroupFireStoreListFragment fragment = new GroupFireStoreListFragment();
@@ -178,7 +176,6 @@ public class GroupFireStoreListFragment extends Fragment implements LocationHelp
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Group item);
     }
 }

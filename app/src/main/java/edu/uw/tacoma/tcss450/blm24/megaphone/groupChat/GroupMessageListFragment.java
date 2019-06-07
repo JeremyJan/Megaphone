@@ -34,9 +34,7 @@ import edu.uw.tacoma.tcss450.blm24.megaphone.R;
  */
 public class GroupMessageListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -51,7 +49,6 @@ public class GroupMessageListFragment extends Fragment {
     public GroupMessageListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static GroupMessageListFragment newInstance(int columnCount) {
         GroupMessageListFragment fragment = new GroupMessageListFragment();
@@ -131,7 +128,6 @@ public class GroupMessageListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(GroupMessage item);
     }
 }

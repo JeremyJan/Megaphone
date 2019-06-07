@@ -119,7 +119,6 @@ public class GroupAddFragment extends Fragment {
         super.onDestroyView();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Group group) {
         if (mListener != null) {
             mListener.onGroupAddFragmentInteraction(group);
@@ -155,7 +154,6 @@ public class GroupAddFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnGroupAddragmentInteractionListener {
-        // TODO: Update argument type and name
         void onGroupAddFragmentInteraction(Group group);
     }
 }

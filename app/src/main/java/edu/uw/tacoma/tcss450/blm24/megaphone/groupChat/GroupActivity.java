@@ -178,7 +178,7 @@ public class GroupActivity extends AppCompatActivity
 
     @Override
     public void onGroupListFragmentInteraction(Group group) {
-        //TODO
+
     }
 
     /**

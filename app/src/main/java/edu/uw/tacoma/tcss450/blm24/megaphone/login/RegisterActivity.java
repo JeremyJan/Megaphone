@@ -125,7 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
      * @return True if all fields are populated, false if not.
      */
     private boolean isValidInfo() {
-        // TODO: Fix validation cases.
         boolean result = false;
         Toast toast;
 
