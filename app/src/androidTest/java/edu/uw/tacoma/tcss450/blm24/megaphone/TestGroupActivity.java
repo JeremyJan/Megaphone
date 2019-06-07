@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.endsWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class testGroupActivity {
+public class TestGroupActivity {
 
     @Rule
     public ActivityTestRule<GroupActivity> activityTestRule =
