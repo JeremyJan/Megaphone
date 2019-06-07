@@ -218,20 +218,13 @@ public class GroupActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 String newUsername = editText.getText().toString();
                 setUsername(newUsername);
-                //sp.edit().putBoolean("defaultName", false).apply();
-                //sp.edit().putString("username", newUsername).apply();
+                Toast.makeText(GroupActivity.this, "Username set to "+ newUsername, Toast.LENGTH_LONG).show();
                 dialog.dismiss();
-
             }
         });
 
         // Set up the negative button option. Should keep old username and dismiss dialog.
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         return alertDialog;
     }
