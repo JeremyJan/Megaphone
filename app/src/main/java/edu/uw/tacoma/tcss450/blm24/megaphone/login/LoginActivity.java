@@ -3,13 +3,25 @@ package edu.uw.tacoma.tcss450.blm24.megaphone.login;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import edu.uw.tacoma.tcss450.blm24.megaphone.groupChat.GroupActivity;
 import edu.uw.tacoma.tcss450.blm24.megaphone.R;
@@ -99,12 +111,10 @@ public class LoginActivity extends AppCompatActivity {
                 boolean emailOk;
                 boolean passOk;
                 if ((emailOk = Validation.validateEmail(memberEmail)) & (passOk = memberPass.length() >= 6)) {
-                    sp.edit().putString("email", memberEmail).apply();
-                    sp.edit().putBoolean("loggedIn", true).apply();
-                    Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
-                    LoginActivity.this.startActivity(intent);
 
-                    finish();
+                    new ValidateLoginInfoAsyncTask(LoginActivity.this).execute();
+
+                    //finish();
                 } else if (!emailOk) {
                     Toast.makeText(context, "Invalid Email", Toast.LENGTH_SHORT).show();
                 } else if (!passOk) {
@@ -116,13 +126,83 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button debugButton = findViewById(R.id.debug_button);
+    }
 
-        debugButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
-            sp.edit().putBoolean("defaultName", true).apply();
-            LoginActivity.this.startActivity(intent);
-        });
+    /**
+     * Async task to handle querying the database that holds login information to check whether
+     * or not user input relates and matches to an existing account.
+     */
+    private class ValidateLoginInfoAsyncTask extends AsyncTask<String, Void, String> {
+
+        /** Reference to the parent class. */
+        LoginActivity parent;
+
+        public ValidateLoginInfoAsyncTask(LoginActivity parent) { this.parent = parent; }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            EditText email = findViewById(R.id.emailInputField);
+            EditText password = findViewById(R.id.passwordInputField);
+
+            JSONObject credentialsReq = new JSONObject();
+
+            // Attempt to reach the backend server.
+            try {
+                credentialsReq.put("email", email.getText().toString());
+                Log.d("email", email.getText().toString());
+                credentialsReq.put("password", password.getText().toString());
+                Log.d("password", password.getText().toString());
+                Log.d("JSON Contents:", credentialsReq.toString());
+
+                URL urlObject = new URL(getString(R.string.check_credentials_url));
+                urlConnection = (HttpURLConnection)urlObject.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setDoOutput(true);
+
+                OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
+
+                wr.write(credentialsReq.toString());
+                wr.flush();
+                wr.close();
+
+                InputStream content = urlConnection.getInputStream();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                String s = "";
+                while ((s = buffer.readLine()) != null) {
+                    response += s;
+
+                }
+                Log.d("response: ", response);
+
+                JSONObject responseJSON = new JSONObject(response);
+
+                if (!responseJSON.getBoolean("success")) {
+
+                    parent.runOnUiThread(() -> {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Invalid email or password.",
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 0);
+                        toast.show();
+                    });
+
+                } else {
+
+                    sp.edit().putBoolean("loggedIn", true).apply();
+                    Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
+                    LoginActivity.this.startActivity(intent);
+                }
+
+            } catch (Exception e) {
+                Log.e("TAG", e.getMessage());
+            }
+
+
+            return response;
+        }
     }
 
 }
