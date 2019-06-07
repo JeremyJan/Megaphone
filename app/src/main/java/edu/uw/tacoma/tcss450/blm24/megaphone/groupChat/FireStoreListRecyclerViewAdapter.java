@@ -1,6 +1,5 @@
 package edu.uw.tacoma.tcss450.blm24.megaphone.groupChat;
 
-import android.location.LocationListener;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -196,10 +196,11 @@ public class GroupActivity extends AppCompatActivity
         alertDialog.setView(editText);
 
         // Set up the positive button option. Should take the entered text and set as new username.
-        alertDialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String newUsername = editText.getText().toString();
+        alertDialog.setPositiveButton("Update", (dialog, which) -> {
+            String newUsername = editText.getText().toString();
+            if(newUsername.length() > 12) {
+                Toast.makeText(GroupActivity.this, "Username too long", Toast.LENGTH_SHORT).show();
+            } else {
                 setUsername(newUsername);
                 Toast.makeText(GroupActivity.this, "Username set to "+ newUsername, Toast.LENGTH_LONG).show();
                 dialog.dismiss();
