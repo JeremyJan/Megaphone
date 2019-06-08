@@ -23,15 +23,21 @@ Logout - You can now logout hooray
 
 Set Username - You can now set you're username to whatever you want
 
-App now stores you're username using SQLite and SharedPreferences
+App now stores your username using SQLite and SharedPreferences
 
 App now has a logo and is stylized
+
+Login verification - In the previous submission, as long as the string for the email appeared to be an email (contained an @ character) and the password was at least six characters long, the app let you move on into the app. Now there is a call to our webservices to validate the login information provided by the user.
+
+Chatheads - The chatroom has an icon next to each user's name in chat, based on the first letter of their chosen username.
+
+Shared Content - From the grouplist page, users can select a share option which prompts them to enter a phone number to share with. The dialog only accepts numerical input, the number must be an appropriate length. Once a number has been entered a premade text containing the user's currently chosen username is sent via sms to the number provided.
 
 ## Bugs and deficiencies
 
 Changing locations on the android studio emulator can cause a glitch where the list shows a negative percentage
 
-Send a text-message doesn't work on emulator
+Send a text-message doesn't work on emulator. Must be done on a device with real mobile service.
 
 A minimum sdk version of 21(Android 5.0) is now required due to multidex
 
