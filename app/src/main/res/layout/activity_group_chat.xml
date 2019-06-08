@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/fragment_chat_container"
         android:layout_width="match_parent"
-        android:layout_height="640dp"
+        android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -32,16 +32,16 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="#FFF">
+            android:background="@color/megaphonePurple">
 
             <EditText
                 android:id="@+id/messageEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:background="@color/megaphonePurple"
-                android:textColor="#FFF"/>
+                android:layout_margin="3dp"
+                android:background="#FFF"
+                android:textColor="@color/megaphoneBlack"/>
         </LinearLayout>
 
         <Button
