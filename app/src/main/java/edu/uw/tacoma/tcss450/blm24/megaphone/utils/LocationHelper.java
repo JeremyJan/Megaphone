@@ -58,8 +58,10 @@ public final class LocationHelper {
         }
         MANAGER.requestLocationUpdates(PROVIDER, 250, 0.5f, listener);
         Location last = MANAGER.getLastKnownLocation(PROVIDER);
-        LAT = last.getLatitude();
-        LON = last.getLongitude();
+        if(last != null) {
+            LAT = last.getLatitude();
+            LON = last.getLongitude();
+        }
         LISTENER = listener;
         return true;
     }
